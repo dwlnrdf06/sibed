@@ -1,0 +1,129 @@
+@extends('layouts.app')
+
+@section('content')
+<h4>Rekapitulasi Sensus Harian Rawat Inap</h4>
+
+{{-- FILTER BULAN & TAHUN --}}
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form action="{{ route('rekap') }}" method="GET" class="row align-items-end">
+            <div class="col-md-3">
+                <label class="form-label fw-bold">Bulan:</label>
+                <select name="bulan" class="form-select">
+                    @foreach($listBulan as $num => $nama)
+                        <option value="{{ $num }}" {{ $bulan == $num ? 'selected' : '' }}>
+                            {{ $nama }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label fw-bold">Tahun:</label>
+                <select name="tahun" class="form-select">
+                    @foreach($listTahun as $thn)
+                        <option value="{{ $thn }}" {{ $tahun == $thn ? 'selected' : '' }}>
+                            {{ $thn }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2 mt-2">
+                <button type="submit" class="btn btn-primary mt-3">Tampilkan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+{{-- TABEL REKAPITULASI --}}
+<div class="table-responsive mt-3">
+    <table class="table table-bordered table-striped" style="font-size: 12px; text-align: center; vertical-align: middle;">
+        <thead class="table-primary" style="text-align: center; vertical-align: middle;">
+            <tr>
+                <th rowspan="2">Tgl</th>
+                <th rowspan="2">Pasien Awal</th>
+                <th rowspan="2">Pasien Baru</th>
+                <th rowspan="2">Pasien Pindahan</th>
+                <th rowspan="2">Pasien Rujukan</th>
+                <th rowspan="2">Jml Masuk</th>
+                <th rowspan="2">Dipindahkan</th>
+                <th colspan="3">Jumlah Pulang</th>
+                <th colspan="2">Meninggal</th>
+                <th rowspan="2">Dirujuk</th>
+                <th rowspan="2">Jml Keluar</th>
+                <th rowspan="2">Masih Dirawat</th>
+                <th rowspan="2">BOR</th>
+                <th rowspan="2">AVLOS</th>
+                <th rowspan="2">BTO</th>
+                <th rowspan="2">TOI</th>
+            </tr>
+            <tr>
+                <th>Sembuh</th>
+                <th>Paksa</th>
+                <th>Kabur</th>
+                <th>&lt;48 Jam</th>
+                <th>≥48 Jam</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($rekap as $r)
+            <tr class="{{ ($r['pasien_baru'] + $r['pasien_pindahan'] + $r['pasien_rujukan']) > 0 ? 'table-light' : '' }}">
+                <td class="fw-bold">{{ $r['tanggal'] }}</td>
+                <td>{{ $r['pasien_awal'] ?: 0 }}</td>
+                <td>{{ $r['pasien_baru'] ?: 0 }}</td>
+                <td>{{ $r['pasien_pindahan'] ?: 0 }}</td>
+                <td>{{ $r['pasien_rujukan'] ?: 0 }}</td>
+                <td>{{ $r['jumlah_masuk'] ?: 0 }}</td>
+                <td>{{ $r['pasien_dipindahkan'] ?: 0 }}</td>
+                <td>{{ $r['pulang_sembuh'] ?: 0 }}</td>
+                <td>{{ $r['pulang_paksa'] ?: 0 }}</td>
+                <td>{{ $r['melarikan_diri'] ?: 0 }}</td>
+                <td>{{ $r['meninggal_lt48'] ?: 0 }}</td>
+                <td>{{ $r['meninggal_gte48'] ?: 0 }}</td>
+                <td>{{ $r['dirujuk'] ?: 0 }}</td>
+                <td>{{ $r['jumlah_keluar'] ?: 0 }}</td>
+                <td>{{ $r['masih_dirawat'] ?: 0 }}</td>
+                <td>{{ $r['bor'] ? $r['bor'].'%' : 0 }}</td>
+                <td>{{ $r['avlos'] ?: 0 }}</td>
+                <td>{{ $r['bto'] ?: 0 }}</td>
+                <td>{{ $r['toi'] ?: 0 }}</td>
+            </tr>
+            @endforeach
+
+            {{-- BARIS TOTAL --}}
+            <tr class="table-warning fw-bold">
+                <td>Total</td>
+                <td>{{ collect($rekap)->sum('pasien_awal') }}</td>
+                <td>{{ collect($rekap)->sum('pasien_baru') }}</td>
+                <td>{{ collect($rekap)->sum('pasien_pindahan') }}</td>
+                <td>{{ collect($rekap)->sum('pasien_rujukan') }}</td>
+                <td>{{ collect($rekap)->sum('jumlah_masuk') }}</td>
+                <td>{{ collect($rekap)->sum('pasien_dipindahkan') }}</td>
+                <td>{{ collect($rekap)->sum('pulang_sembuh') }}</td>
+                <td>{{ collect($rekap)->sum('pulang_paksa') }}</td>
+                <td>{{ collect($rekap)->sum('melarikan_diri') }}</td>
+                <td>{{ collect($rekap)->sum('meninggal_lt48') }}</td>
+                <td>{{ collect($rekap)->sum('meninggal_gte48') }}</td>
+                <td>{{ collect($rekap)->sum('dirujuk') }}</td>
+                <td>{{ collect($rekap)->sum('jumlah_keluar') }}</td>
+                <td>{{ collect($rekap)->last()['masih_dirawat'] }}</td>
+                <td>{{ round(collect($rekap)->avg('bor'), 2) }}%</td>
+                <td>{{ round(collect($rekap)->avg('avlos'), 2) }}</td>
+                <td>{{ round(collect($rekap)->avg('bto'), 2) }}</td>
+                <td>{{ round(collect($rekap)->avg('toi'), 2) }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="col-12 mt-2 d-flex justify-content-end">
+    <a href="{{ route('rekap.print', [$bulan, $tahun]) }}"
+        target="_blank"
+        class="btn text-white fw-bold px-4"
+        style="background-color: #28a745; border: none;">
+        🖨️ Print
+    </a>
+</div>
+@endsection
