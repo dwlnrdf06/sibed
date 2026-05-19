@@ -34,7 +34,7 @@ class UserFactory extends Factory
     }
 
     /**
-     * KELOMPOK 6 SIBED
+     * Indicate that the model's email address should be unverified.
      */
     public function unverified(): static
     {
