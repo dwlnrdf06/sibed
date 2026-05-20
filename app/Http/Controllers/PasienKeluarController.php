@@ -8,7 +8,7 @@ use App\Models\PasienKeluar;
 use App\Models\PasienMasuk;
 use App\Models\Kamar;
 use App\Models\SensusHarian;
-use App\Models\Rekapitulasi; // ← TAMBAH INI
+use App\Models\Rekapitulasi;
 use Carbon\Carbon;
 
 class PasienKeluarController extends Controller
@@ -31,37 +31,33 @@ class PasienKeluarController extends Controller
         ]);
 
         $pasien = Pasien::where('no_rm', $request->no_rm)->first();
+
         // Cari entri pasien_masuk yang belum keluar
         $pasienMasuk = PasienMasuk::where('pasien_id', $pasien->id)
-            ->whereNotIn('id', function($q) {
-                $q->select('pasien_masuk_id')
-                ->from('pasien_keluar')
-                ->whereNotNull('pasien_masuk_id');
-            })
+            ->whereDoesntHave('pasienKeluar')
             ->latest('tanggal_masuk')
             ->first();
 
         $masuk  = Carbon::parse($request->tanggal_masuk);
         $keluar = Carbon::parse($request->tanggal_keluar);
-        $lama = $masuk->diffInDays($keluar);
-        // One day care = masuk dan keluar tanggal sama
+        $lama   = $masuk->diffInDays($keluar);
+
         if ($masuk->isSameDay($keluar)) {
-            $lama          = 1; // ← ubah dari 0 jadi 1
+            $lama          = 1;
             $hariPerawatan = 1;
         } else {
             $hariPerawatan = $lama + 1;
         }
 
         PasienKeluar::create([
-            'pasien_id'      => $pasien->id,
+            'pasien_id'       => $pasien->id,
             'pasien_masuk_id' => $pasienMasuk?->id,
-            'kamar_id'       => $request->kamar_id,
-            'tanggal_masuk'  => $request->tanggal_masuk,
-            'tanggal_keluar' => $request->tanggal_keluar,
-            'lama_dirawat'   => $lama,
-            'lama_dirawat'   => $hariPerawatan,
-            'cara_keluar'    => $request->cara_keluar,
-            'dirujuk_ke'     => $request->dirujuk_ke,
+            'kamar_id'        => $request->kamar_id,
+            'tanggal_masuk'   => $request->tanggal_masuk,
+            'tanggal_keluar'  => $request->tanggal_keluar,
+            'lama_dirawat'    => $hariPerawatan,
+            'cara_keluar'     => $request->cara_keluar,
+            'dirujuk_ke'      => $request->dirujuk_ke,
         ]);
 
         $kamar = Kamar::find($request->kamar_id);
@@ -79,8 +75,6 @@ class PasienKeluarController extends Controller
 
         return back()->with('success', 'Data pasien keluar berhasil disimpan!');
     }
-    
-
 
     public function cariPasienAktif(Request $request)
     {
@@ -91,11 +85,7 @@ class PasienKeluarController extends Controller
                 $q->where('nama_pasien', 'LIKE', "%$keyword%")
                 ->orWhere('no_rm', 'LIKE', "%$keyword%");
             })
-            ->whereNotIn('id', function($q) {
-                $q->select('pasien_masuk_id')
-                ->from('pasien_keluar')
-                ->whereNotNull('pasien_masuk_id');
-            })
+            ->whereDoesntHave('pasienKeluar')
             ->latest('tanggal_masuk')
             ->first();
 
@@ -113,9 +103,6 @@ class PasienKeluarController extends Controller
         return response()->json(['found' => false]);
     }
 
-
-
-
     private function updateSensus($tanggal)
     {
         $masukHariIni   = PasienMasuk::whereDate('tanggal_masuk', $tanggal)->get();
@@ -123,7 +110,6 @@ class PasienKeluarController extends Controller
         $pasienPindahan = $masukHariIni->where('cara_masuk', 'Pindahan Ruangan')->count();
         $pasienRujukan  = $masukHariIni->where('cara_masuk', 'Rujukan')->count();
 
-        // ← Hitung pasien awal (sisa dari hari sebelumnya)
         $tanggalKemarin = Carbon::parse($tanggal)->subDay()->toDateString();
         $pasienAwal     = PasienMasuk::whereDate('tanggal_masuk', '<=', $tanggalKemarin)
                             ->whereDoesntHave('pasienKeluar', function($q) use ($tanggalKemarin) {
@@ -153,7 +139,7 @@ class PasienKeluarController extends Controller
         $toi   = $totalKeluar  > 0 ? round((($totalTempat - $hariPerawatan) / $totalKeluar), 2) : 0;
 
         $data = [
-            'pasien_awal'          => $pasienAwal, // ← TAMBAH INI
+            'pasien_awal'          => $pasienAwal,
             'pasien_baru'          => $pasienBaru,
             'pasien_pindahan'      => $pasienPindahan,
             'pasien_rujukan'       => $pasienRujukan,
@@ -166,13 +152,11 @@ class PasienKeluarController extends Controller
             'pasien_masih_dirawat' => $masihDirawat,
         ];
 
-        // ← Simpan ke tabel sensus_harian
         SensusHarian::updateOrCreate(
             ['tanggal' => $tanggal],
             $data
         );
 
-        // ← Simpan ke tabel rekapitulasi (TAMBAHAN BARU)
         Rekapitulasi::updateOrCreate(
             ['tanggal' => $tanggal],
             array_merge($data, [

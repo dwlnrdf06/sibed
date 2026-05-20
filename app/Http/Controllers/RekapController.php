@@ -16,7 +16,7 @@ class RekapController extends Controller
         $tahun = $request->tahun ?? Carbon::now()->year;
 
         $jumlahHari = Carbon::createFromDate($tahun, $bulan, 1)->daysInMonth;
-        $tempat_tidur = 100;
+        $tempat_tidur = 47;
 
         $rekap = [];
         for ($hari = 1; $hari <= $jumlahHari; $hari++) {
@@ -53,7 +53,7 @@ class RekapController extends Controller
             $meninggalGte48 = $keluarHariIni->where('cara_keluar', 'Meninggal >= 48 Jam')->count();
             $jumlah_keluar  = $sembuh + $pulangPaksa + $dirujuk + $meninggalLt48 + $meninggalGte48;
 
-            $bor   = $tempat_tidur > 0 ? round(($masihDirawat / $tempat_tidur) * 100, 2) : 0;
+            $bor   = $tempat_tidur > 0 ? round(($masihDirawat / $tempat_tidur) * 47, 2) : 0;
             $avlos = $jumlah_keluar > 0 ? round($masihDirawat / $jumlah_keluar, 2) : 0;
             $bto   = round($jumlah_keluar / $tempat_tidur, 2);
             $toi   = $jumlah_keluar > 0 ? round(($tempat_tidur - $masihDirawat) / $jumlah_keluar, 2) : 0;
@@ -96,7 +96,7 @@ class RekapController extends Controller
     public function print($bulan, $tahun)
     {
         $jumlahHari = Carbon::createFromDate($tahun, $bulan, 1)->daysInMonth;
-        $tempat_tidur = 100;
+        $tempat_tidur = 47;
 
         $rekap = [];
         for ($hari = 1; $hari <= $jumlahHari; $hari++) {
@@ -133,7 +133,7 @@ class RekapController extends Controller
             $meninggalGte48 = $keluarHariIni->where('cara_keluar', 'Meninggal >= 48 Jam')->count();
             $jumlah_keluar  = $sembuh + $pulangPaksa + $dirujuk + $meninggalLt48 + $meninggalGte48;
 
-            $bor   = $tempat_tidur > 0 ? round(($masihDirawat / $tempat_tidur) * 100, 2) : 0;
+            $bor   = $tempat_tidur > 0 ? round(($masihDirawat / $tempat_tidur) * 47, 2) : 0;
             $avlos = $jumlah_keluar > 0 ? round($masihDirawat / $jumlah_keluar, 2) : 0;
             $bto   = round($jumlah_keluar / $tempat_tidur, 2);
             $toi   = $jumlah_keluar > 0 ? round(($tempat_tidur - $masihDirawat) / $jumlah_keluar, 2) : 0;
