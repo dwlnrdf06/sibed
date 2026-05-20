@@ -37,67 +37,62 @@
                             <th colspan="4" style="font-weight: bold;">PASIEN RUJUKAN</th>
                         </tr>
                         <tr>
-                            <th style="font-weight: normal;">Nama</th>
-                            <th style="font-weight: normal;">No RM</th>
-                            <th style="font-weight: normal;">Nama Kamar</th>
-                            <th style="font-weight: normal;">Nama</th>
-                            <th style="font-weight: normal;">No RM</th>
-                            <th style="font-weight: normal;">Nama Kamar</th>
-                            <th style="font-weight: normal;">Nama</th>
-                            <th style="font-weight: normal;">No RM</th>
-                            <th style="font-weight: normal;">Nama Kamar</th>
-                            <th style="font-weight: normal;">Dari</th>
-                            <th style="font-weight: normal;">Nama</th>
-                            <th style="font-weight: normal;">No RM</th>
-                            <th style="font-weight: normal;">Rujukan</th>
-                            <th style="font-weight: normal;">Nama Kamar</th>
+                            <th>Nama</th>
+                            <th>No RM</th>
+                            <th>Nama Kamar</th>
+                            <th>Nama</th>
+                            <th>No RM</th>
+                            <th>Nama Kamar</th>
+                            <th>Nama</th>
+                            <th>No RM</th>
+                            <th>Nama Kamar</th>
+                            <th>Dari</th>
+                            <th>Nama</th>
+                            <th>No RM</th>
+                            <th>Rujukan Dari</th>
+                            <th>Nama Kamar</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
                             $awal     = $pasienAwal->values();
-                            $baru     = $pasienMasuk->where('cara_masuk', 'Pasien Baru')->values();
-                            $pindahan = $pasienMasuk->where('cara_masuk', 'Pindahan Ruangan')->values();
-                            $rujukan  = $pasienMasuk->where('cara_masuk', 'Rujukan')->values();
+                            $baru     = $pasienMasuk->filter(fn($p) => $p->cara_masuk === 'Pasien Baru')->values();
+                            $pindahan = $pasienMasuk->filter(fn($p) => $p->cara_masuk === 'Pindahan Ruangan')->values();
+                            $rujukan  = $pasienMasuk->filter(fn($p) => $p->cara_masuk === 'Rujukan')->values();
 
-                            // ← Hapus angka 1, jadi 0 kalau tidak ada data
-                            $maxRows = max(
-                                $awal->count(),
-                                $baru->count(),
-                                $pindahan->count(),
-                                $rujukan->count()
-                            );
+                            $maxRows = max($awal->count(), $baru->count(), $pindahan->count(), $rujukan->count());
                         @endphp
 
-                        {{-- ← Kalau tidak ada data tampil pesan --}}
                         @if($maxRows == 0)
                         <tr>
-                            <td colspan="15" class="text-center text-muted fst-italic">Belum ada data</td>
+                            <td colspan="15" class="text-center text-muted py-4">Belum ada data pasien masuk</td>
                         </tr>
                         @else
-                        @for($i = 0; $i < $maxRows; $i++)
-                        <tr>
-                            <td>{{ $i + 1 }}</td>
-                            {{-- Pasien Awal --}}
-                            <td>{{ isset($awal[$i]) ? $awal[$i]->pasien->nama_pasien : '' }}</td>
-                            <td>{{ isset($awal[$i]) ? $awal[$i]->pasien->no_rm : '' }}</td>
-                            <td>{{ isset($awal[$i]) ? $awal[$i]->kamar->nama_kamar : '' }}</td>
-                            {{-- Pasien Baru --}}
-                            <td>{{ isset($baru[$i]) ? $baru[$i]->pasien->nama_pasien : '' }}</td>
-                            <td>{{ isset($baru[$i]) ? $baru[$i]->pasien->no_rm : '' }}</td>
-                            <td>{{ isset($baru[$i]) ? $baru[$i]->kamar->nama_kamar : '' }}</td>
-                            {{-- Pasien Pindahan --}}
-                            <td>{{ isset($pindahan[$i]) ? $pindahan[$i]->pasien->nama_pasien : '' }}</td>
-                            <td>{{ isset($pindahan[$i]) ? $pindahan[$i]->pasien->no_rm : '' }}</td>
-                            <td>{{ isset($pindahan[$i]) ? $pindahan[$i]->kamar->nama_kamar : '' }}</td>
-                            <td>{{ isset($pindahan[$i]) ? $pindahan[$i]->rujukan_dari : '' }}</td>
-                            {{-- Pasien Rujukan --}}
-                            <td>{{ isset($rujukan[$i]) ? $rujukan[$i]->pasien->nama_pasien : '' }}</td>
-                            <td>{{ isset($rujukan[$i]) ? $rujukan[$i]->pasien->no_rm : '' }}</td>
-                            <td>{{ isset($rujukan[$i]) ? $rujukan[$i]->rujukan_dari : '' }}</td>
-                            <td>{{ isset($rujukan[$i]) ? $rujukan[$i]->kamar->nama_kamar : '' }}</td>
-                        </tr>
-                        @endfor
+                            @for($i = 0; $i < $maxRows; $i++)
+                            <tr>
+                                <td>{{ $i + 1 }}</td>
+                                <!-- PASIEN AWAL -->
+                                <td>{{ $awal[$i]->pasien->nama_pasien ?? '' }}</td>
+                                <td>{{ $awal[$i]->pasien->no_rm ?? '' }}</td>
+                                <td>{{ $awal[$i]->kamar->nama_kamar ?? '' }}</td>
+                                <!-- PASIEN BARU -->
+                                <td>{{ $baru[$i]->pasien->nama_pasien ?? '' }}</td>
+                                <td>{{ $baru[$i]->pasien->no_rm ?? '' }}</td>
+                                <td>{{ $baru[$i]->kamar->nama_kamar ?? '' }}</td>
+                                <!-- PASIEN PINDAHAN -->
+                                <td>{{ $pindahan[$i]->pasien->nama_pasien ?? '' }}</td>
+                                <td>{{ $pindahan[$i]->pasien->no_rm ?? '' }}</td>
+                                <td>{{ $pindahan[$i]->kamar->nama_kamar ?? '' }}</td>
+                                <td>{{ $pindahan[$i]->rujukan_dari ?? '-' }}</td>
+                                <!-- PASIEN RUJUKAN -->
+        
+                                <td>{{ $rujukan[$i]->pasien->nama_pasien ?? '' }}</td>
+                                <td>{{ $rujukan[$i]->pasien->no_rm ?? '' }}</td>
+                                <td>{{ $rujukan[$i]->rujukan_dari ?? '-' }}</td>
+                                <td>{{ $rujukan[$i]->kamar->nama_kamar ?? '' }}</td>
+                            
+                            </tr>
+                            @endfor
                         @endif
                     </tbody>
                 </table>
@@ -145,25 +140,29 @@
                         @forelse($pasienKeluar as $pk)
                         <tr>
                             <td>{{ $no++ }}</td>
+                            <!-- DIPINDAHKAN -->
                             <td>{{ $pk->cara_keluar == 'Dipindahkan' ? $pk->pasien->nama_pasien : '' }}</td>
                             <td>{{ $pk->cara_keluar == 'Dipindahkan' ? $pk->pasien->no_rm : '' }}</td>
-                            <td>{{ $pk->cara_keluar == 'Dipindahkan' ? $pk->kamar->kelas_kamar : '' }}</td>
+                            <td>{{ $pk->cara_keluar == 'Dipindahkan' ? ($pk->kamar->kelas_kamar ?? '') : '' }}</td>
                             <td>{{ $pk->cara_keluar == 'Dipindahkan' ? ($pk->kamarPindahan->nama_kamar ?? '-') : '' }}</td>
+                            
+                            <!-- KELUAR RUMAH SAKIT -->
                             <td>{{ $pk->cara_keluar != 'Dipindahkan' ? $pk->pasien->nama_pasien : '' }}</td>
                             <td>{{ $pk->cara_keluar != 'Dipindahkan' ? $pk->pasien->no_rm : '' }}</td>
                             <td>{{ $pk->cara_keluar != 'Dipindahkan' ? $pk->kamar->nama_kamar : '' }}</td>
                             <td>{{ $pk->tanggal_masuk }}</td>
+                            
                             <td>{{ $pk->cara_keluar == 'Dirujuk' ? '✓' : '' }}</td>
                             <td>{{ $pk->cara_keluar == 'Sembuh' ? '✓' : '' }}</td>
                             <td>{{ $pk->cara_keluar == 'Pulang Paksa' ? '✓' : '' }}</td>
                             <td>{{ $pk->cara_keluar == 'Meninggal < 48 Jam' ? '✓' : '' }}</td>
                             <td>{{ $pk->cara_keluar == 'Meninggal >= 48 Jam' ? '✓' : '' }}</td>
-                            <td>{{ $pk->lama_dirawat }}</td>
-                            <td>{{ $pk->hari_perawatan }}</td>
+                            <td>{{ $pk->lama_dirawat ?? '' }}</td>
+                            <td>{{ $pk->hari_perawatan ?? '' }}</td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="16" class="text-center text-muted fst-italic">Belum ada data</td>
+                            <td colspan="16" class="text-center text-muted py-4">Belum ada data pasien keluar</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -172,15 +171,12 @@
         </div>
     </div>
 
-    <div class="col-12 mt-2 mb-3 d-flex justify-content-end">
-        <a href="{{ route('sensus.print', $tanggal) }}"
-            target="_blank"
-            class="btn text-white fw-bold px-4"
-            style="background-color: #28a745; border: none;">
+    <div class="col-12 mt-3 d-flex justify-content-end">
+        <a href="{{ route('sensus.print', $tanggal) }}" target="_blank" 
+           class="btn text-white fw-bold px-4" style="background-color: #28a745;">
             🖨️ Print
         </a>
     </div>
-
 
 </div>
 @endsection
