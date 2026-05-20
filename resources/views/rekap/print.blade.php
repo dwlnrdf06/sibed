@@ -74,7 +74,7 @@
             <td>{{ $r['pasien_dipindahkan'] ?: 0 }}</td>
             <td>{{ $r['pulang_sembuh'] ?: 0 }}</td>
             <td>{{ $r['pulang_paksa'] ?: 0 }}</td>
-            <td>-</td>
+            <td>{{ $r['melarikan_diri'] ?? 0 }}</td>
             <td>{{ $r['meninggal_lt48'] ?: 0 }}</td>
             <td>{{ $r['meninggal_gte48'] ?: 0 }}</td>
             <td>{{ $r['dirujuk'] ?: 0 }}</td>
@@ -98,7 +98,7 @@
             <td>{{ collect($rekap)->sum('pasien_dipindahkan') }}</td>
             <td>{{ collect($rekap)->sum('pulang_sembuh') }}</td>
             <td>{{ collect($rekap)->sum('pulang_paksa') }}</td>
-            <td>-</td>
+            <td>{{ collect($rekap)->sum('melarikan_diri') }}</td>
             <td>{{ collect($rekap)->sum('meninggal_lt48') }}</td>
             <td>{{ collect($rekap)->sum('meninggal_gte48') }}</td>
             <td>{{ collect($rekap)->sum('dirujuk') }}</td>
