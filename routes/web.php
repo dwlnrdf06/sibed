@@ -46,4 +46,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/rekap/print/{bulan}/{tahun}', [RekapController::class, 'print'])
         ->name('rekap.print')
         ->middleware('role:admin,pmik');
+    
+        Route::get('/api/cari-pasien', function(\Illuminate\Http\Request $request) {
+        $keyword = $request->q;
+        $pasien  = \App\Models\Pasien::where('nama_pasien', 'LIKE', "%{$keyword}%")
+                    ->orWhere('no_rm', 'LIKE', "%{$keyword}%")
+                    ->limit(10)
+                    ->get(['id', 'nama_pasien', 'no_rm']);
+        return response()->json($pasien);
+    })->middleware('auth');
 });
