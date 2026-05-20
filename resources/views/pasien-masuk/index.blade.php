@@ -22,7 +22,7 @@
                 <label>Nama Pasien</label>
                 <input type="text" id="nama_pasien_input" name="nama_pasien"
                     class="form-control" autocomplete="off"
-                    placeholder="Ketik nama atau No RM..." required
+                    placeholder="Masukkan Nama Pasien" required
                     oninput="cariPasien(this.value)">
 
                 {{-- Dropdown hasil pencarian --}}
@@ -41,7 +41,7 @@
             <div class="col-md-6 mb-2">
                 <label>No RM</label>
                 <input type="text" id="no_rm_input" name="no_rm"
-                    class="form-control" placeholder="No RM otomatis terisi" required>
+                    class="form-control" placeholder="Isi Nomor RM" required>
             </div>
 
             <div class="col-md-4 mb-2">
