@@ -41,6 +41,7 @@ class PasienMasukController extends Controller
             'cara_masuk'    => $request->cara_masuk,
             'rujukan_dari'  => $request->rujukan_dari,
             'tanggal_masuk' => $request->tanggal_masuk,
+            'pindahan_dari' => $request->pindahan_dari,
         ]);
 
         $kamar = Kamar::find($request->kamar_id);

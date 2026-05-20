@@ -9,12 +9,9 @@ class PasienMasuk extends Model
     protected $table = 'pasien_masuk'; // ← tambah ini agar tidak auto jadi 'pasien_masuks'
 
     protected $fillable = [
-        'pasien_id',
-        'kamar_id',
-        'cara_masuk',
-        'rujukan_dari',
-        'tanggal_masuk',
-    ];
+    'pasien_id', 'kamar_id', 'cara_masuk', 
+    'rujukan_dari', 'pindahan_dari', 'tanggal_masuk'
+];
 
     // Relasi ke tabel pasien
     public function pasien()
