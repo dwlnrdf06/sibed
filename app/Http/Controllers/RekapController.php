@@ -19,7 +19,7 @@ class RekapController extends Controller
         for ($hari = 1; $hari <= $jumlahHari; $hari++) {
             $tanggal = Carbon::createFromDate($tahun, $bulan, $hari)->toDateString();
 
-            // ← Ambil dari tabel rekapitulasi (bukan sensus_harian)
+            // ← Ambilll dari tabel rekapitulasi (bukan sensus_harian)
             $data = Rekapitulasi::where('tanggal', $tanggal)->first();
 
             $rekap[] = [
