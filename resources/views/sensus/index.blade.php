@@ -152,7 +152,7 @@
                             <td>{{ $pk->cara_keluar != 'Dipindahkan' ? $pk->kamar->nama_kamar : '' }}</td>
                             <td>{{ $pk->tanggal_masuk }}</td>
                             
-                            <td>{{ $pk->cara_keluar == 'Dirujuk' ? '✓' : '' }}</td>
+                            <td>{{ $pk->cara_keluar == 'Dirujuk' ? $pk->dirujuk_ke : '' }}</td>
                             <td>{{ $pk->cara_keluar == 'Sembuh' ? '✓' : '' }}</td>
                             <td>{{ $pk->cara_keluar == 'Pulang Paksa' ? '✓' : '' }}</td>
                             <td>{{ $pk->cara_keluar == 'Meninggal < 48 Jam' ? '✓' : '' }}</td>
