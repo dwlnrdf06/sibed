@@ -28,6 +28,8 @@ class PasienMasukController extends Controller
             'tanggal_masuk' => 'required|date',
         ]);
 
+        // Kalau pasien sudah ada (dipilih dari dropdown) pakai data lama
+        // Kalau belum ada, buat baru
         $pasien = Pasien::firstOrCreate(
             ['no_rm' => $request->no_rm],
             ['nama_pasien' => $request->nama_pasien]
