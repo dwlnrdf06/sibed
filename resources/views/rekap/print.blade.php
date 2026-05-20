@@ -66,24 +66,24 @@
         @foreach($rekap as $r)
         <tr>
             <td>{{ $r['tanggal'] }}</td>
-            <td>{{ $r['pasien_awal'] ?: '-' }}</td>
-            <td>{{ $r['pasien_baru'] ?: '-' }}</td>
-            <td>{{ $r['pasien_pindahan'] ?: '-' }}</td>
-            <td>{{ $r['pasien_rujukan'] ?: '-' }}</td>
-            <td>{{ $r['jumlah_masuk'] ?: '-' }}</td>
-            <td>{{ $r['pasien_dipindahkan'] ?: '-' }}</td>
-            <td>{{ $r['pulang_sembuh'] ?: '-' }}</td>
-            <td>{{ $r['pulang_paksa'] ?: '-' }}</td>
+            <td>{{ $r['pasien_awal'] ?: 0 }}</td>
+            <td>{{ $r['pasien_baru'] ?: 0 }}</td>
+            <td>{{ $r['pasien_pindahan'] ?: 0 }}</td>
+            <td>{{ $r['pasien_rujukan'] ?: 0 }}</td>
+            <td>{{ $r['jumlah_masuk'] ?: 0 }}</td>
+            <td>{{ $r['pasien_dipindahkan'] ?: 0 }}</td>
+            <td>{{ $r['pulang_sembuh'] ?: 0 }}</td>
+            <td>{{ $r['pulang_paksa'] ?: 0 }}</td>
             <td>-</td>
-            <td>{{ $r['meninggal_lt48'] ?: '-' }}</td>
-            <td>{{ $r['meninggal_gte48'] ?: '-' }}</td>
-            <td>{{ $r['dirujuk'] ?: '-' }}</td>
-            <td>{{ $r['jumlah_keluar'] ?: '-' }}</td>
-            <td>{{ $r['masih_dirawat'] ?: '-' }}</td>
-            <td>{{ $r['bor'] ? $r['bor'].'%' : '-' }}</td>
-            <td>{{ $r['avlos'] ?: '-' }}</td>
-            <td>{{ $r['bto'] ?: '-' }}</td>
-            <td>{{ $r['toi'] ?: '-' }}</td>
+            <td>{{ $r['meninggal_lt48'] ?: 0 }}</td>
+            <td>{{ $r['meninggal_gte48'] ?: 0 }}</td>
+            <td>{{ $r['dirujuk'] ?: 0 }}</td>
+            <td>{{ $r['jumlah_keluar'] ?: 0 }}</td>
+            <td>{{ $r['masih_dirawat'] ?: 0 }}</td>
+            <td>{{ $r['bor'] ? $r['bor'].'%' : 0 }}</td>
+            <td>{{ $r['avlos'] ?: 0 }}</td>
+            <td>{{ $r['bto'] ?: 0 }}</td>
+            <td>{{ $r['toi'] ?: 0 }}</td>
         </tr>
         @endforeach
 
