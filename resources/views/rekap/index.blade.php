@@ -80,7 +80,7 @@
                 <td>{{ $r['pasien_dipindahkan'] ?: 0 }}</td>
                 <td>{{ $r['pulang_sembuh'] ?: 0 }}</td>
                 <td>{{ $r['pulang_paksa'] ?: 0 }}</td>
-                <td>{{ $r['melarikan_diri'] ?: 0 }}</td>
+                <td>{{ $r['melarikan_diri'] }}</td>
                 <td>{{ $r['meninggal_lt48'] ?: 0 }}</td>
                 <td>{{ $r['meninggal_gte48'] ?: 0 }}</td>
                 <td>{{ $r['dirujuk'] ?: 0 }}</td>
