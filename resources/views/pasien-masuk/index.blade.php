@@ -4,14 +4,14 @@
 
 {{-- ===== JUDUL ===== --}}
 <h4 style="font-weight: bold; color: #333; margin-bottom: 5px;">
-    <i class="bi bi-person-fill-add me-2" style="color:#6B7280;"></i>
+    <i class="bi bi-person-fill-add me-2" style="color:black;"></i>
     Form Pasien Masuk
 </h4>
 
 <div style="
     width: 60px;
     height: 4px;
-    background: linear-gradient(135deg, #6B7280, #d1d5db);
+    background: blue;
     border-radius: 5px;
     margin-bottom: 25px;">
 </div>
@@ -41,7 +41,7 @@
             <div class="col-md-6 mb-3" style="position: relative;">
 
                 <label class="form-label fw-semibold"
-                    style="font-size:13px; color:#6B7280;">
+                    style="font-size:15px; color:#6B7280;">
 
                     <i class="bi bi-person-fill me-1"></i>
                     Nama Pasien
@@ -94,9 +94,9 @@
             <div class="col-md-6 mb-3" style="position: relative;">
 
                 <label class="form-label fw-semibold"
-                    style="font-size:13px; color:#6B7280;">
+                    style="font-size:15px; color:#6B7280;">
 
-                    <i class="bi bi-file-earmark-medical-fill me-1"></i>
+                    <i class="bi bi-upc-scan me-1"></i>
                     No RM
 
                 </label>
@@ -147,7 +147,7 @@
             <div class="col-md-4 mb-3">
 
                 <label class="form-label fw-semibold"
-                    style="font-size:13px; color:#6B7280;">
+                    style="font-size:15px; color:#6B7280;">
 
                     <i class="bi bi-door-open-fill me-1"></i>
                     Cara Masuk
@@ -159,7 +159,7 @@
                     <span class="input-group-text"
                         style="background:#f3f4f6; border-color:#6B7280;">
 
-                        <i class="bi bi-signpost-split"
+                        <i class="bi bi-door-open-fill me-1"
                             style="color:#6B7280;"></i>
 
                     </span>
@@ -185,9 +185,9 @@
             <div class="col-md-4 mb-3">
 
                 <label class="form-label fw-semibold"
-                    style="font-size:13px; color:#6B7280;">
+                    style="font-size:15px; color:#6B7280;">
 
-                    <i class="bi bi-hospital-fill me-1"></i>
+                    <i class="bi bi-house-door-fill me-1"></i>
                     Nama Kamar
 
                 </label>
@@ -197,7 +197,7 @@
                     <span class="input-group-text"
                         style="background:#f3f4f6; border-color:#6B7280;">
 
-                        <i class="bi bi-house-door"
+                        <i class="bi bi-house-door-fill me-1"
                             style="color:#6B7280;"></i>
 
                     </span>
@@ -224,7 +224,7 @@
             <div class="col-md-4 mb-3">
 
                 <label class="form-label fw-semibold"
-                    style="font-size:13px; color:#6B7280;">
+                    style="font-size:15px; color:#6B7280;">
 
                     <i class="bi bi-building-fill-check me-1"></i>
                     Rujukan Dari
@@ -236,7 +236,7 @@
                     <span class="input-group-text"
                         style="background:#f3f4f6; border-color:#6B7280;">
 
-                        <i class="bi bi-geo-alt-fill"
+                        <i class="bi bi-building-fill-check me-1"
                             style="color:#6B7280;"></i>
 
                     </span>
@@ -256,7 +256,7 @@
             <div class="col-md-4 mb-3">
 
                 <label class="form-label fw-semibold"
-                    style="font-size:13px; color:#6B7280;">
+                    style="font-size: 15px; color:#6B7280;">
 
                     <i class="bi bi-arrow-left-right me-1"></i>
                     Pindahan Dari
@@ -300,9 +300,9 @@
             <div class="col-md-6 mb-3">
 
                 <label class="form-label fw-semibold"
-                    style="font-size:13px; color:#6B7280;">
+                    style="font-size:15px; color:#6B7280;">
 
-                    <i class="bi bi-calendar3 me-1"></i>
+                    <i class="bi bi-calendar-event-fill me-1"></i>
                     Tanggal Masuk
 
                 </label>
