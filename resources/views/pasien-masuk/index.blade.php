@@ -33,10 +33,18 @@
             </div>
 
             {{-- NO RM --}}
-            <div class="col-md-6 mb-2">
+            <div class="col-md-6 mb-2" style="position: relative;">
                 <label>No RM</label>
                 <input type="text" id="no_rm_input" name="no_rm"
-                    class="form-control" placeholder="Isi Nomor RM" required>
+                    class="form-control" autocomplete="off"
+                    placeholder="Isi Nomor RM" required
+                    oninput="cariPasien(this.value)">
+                <div id="dropdown_norm"
+                    style="display:none; position:absolute; top:100%; left:0; right:0;
+                        background:white; border:1px solid #ddd; border-radius:8px;
+                        box-shadow:0 4px 15px rgba(0,0,0,0.1); z-index:999;
+                        max-height:250px; overflow-y:auto;">
+                </div>
             </div>
 
             {{-- CARA MASUK --}}
@@ -85,24 +93,27 @@
 </div>
 
 <script>
-// ===== AUTOCOMPLETE PASIEN =====
 function cariPasien(keyword) {
-    const dropdown = document.getElementById('dropdown_pasien');
+    const dropdownNama = document.getElementById('dropdown_pasien');
+    const dropdownNorm = document.getElementById('dropdown_norm');
 
-    if (keyword.length < 1) {
-        dropdown.style.display = 'none';
-        return;
-    }
+    dropdownNama.style.display = 'none';
+    dropdownNorm.style.display = 'none';
+
+    if (keyword.length < 1) return;
 
     fetch(`/api/cari-pasien?q=${encodeURIComponent(keyword)}`)
         .then(res => res.json())
         .then(data => {
-            console.log('Data:', data); // ← cek di console browser
-            dropdown.innerHTML = '';
+            const aktif = document.activeElement.id === 'no_rm_input'
+                ? dropdownNorm
+                : dropdownNama;
+
+            aktif.innerHTML = '';
 
             if (data.length === 0) {
-                dropdown.innerHTML = `<div style="padding:12px 15px; color:#999; font-size:13px;">Pasien tidak ditemukan</div>`;
-                dropdown.style.display = 'block';
+                aktif.innerHTML = `<div style="padding:12px 15px; color:#999; font-size:13px;">Pasien tidak ditemukan</div>`;
+                aktif.style.display = 'block';
                 return;
             }
 
@@ -118,26 +129,31 @@ function cariPasien(keyword) {
                 item.onclick = () => {
                     document.getElementById('nama_pasien_input').value = pasien.nama_pasien;
                     document.getElementById('no_rm_input').value        = pasien.no_rm;
-                    dropdown.style.display = 'none';
+                    dropdownNama.style.display = 'none';
+                    dropdownNorm.style.display = 'none';
                 };
-                dropdown.appendChild(item);
+                aktif.appendChild(item);
             });
 
-            dropdown.style.display = 'block';
+            aktif.style.display = 'block';
         })
         .catch(err => console.error('Error:', err));
 }
 
-// Tutup dropdown kalau klik di luar
 document.addEventListener('click', function(e) {
-    const dropdown = document.getElementById('dropdown_pasien');
-    const input    = document.getElementById('nama_pasien_input');
-    if (dropdown && !dropdown.contains(e.target) && e.target !== input) {
-        dropdown.style.display = 'none';
+    const dropdownNama = document.getElementById('dropdown_pasien');
+    const dropdownNorm = document.getElementById('dropdown_norm');
+    const inputNama    = document.getElementById('nama_pasien_input');
+    const inputNorm    = document.getElementById('no_rm_input');
+
+    if (!dropdownNama.contains(e.target) && e.target !== inputNama) {
+        dropdownNama.style.display = 'none';
+    }
+    if (!dropdownNorm.contains(e.target) && e.target !== inputNorm) {
+        dropdownNorm.style.display = 'none';
     }
 });
 
-// ===== SHOW/HIDE PINDAHAN GROUP =====
 document.getElementById('cara_masuk').addEventListener('change', function () {
     const value         = this.value;
     const pindahanGroup = document.getElementById('pindahan_group');
