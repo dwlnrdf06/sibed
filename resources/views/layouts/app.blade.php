@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Poppins', sans-serif !important; box-sizing: border-box; }
-        body { margin: 0; padding: 0; background: #f5f5f5; overflow-x: hidden; }
+        body { margin: 0; padding: 0; background: #f7f8f8; overflow-x: hidden; }
         .navbar-gradient {
             background: #1976D2;
             min-height: 90px; padding: 20px; position: fixed;
@@ -21,7 +21,7 @@
         .navbar-brand { font-size: 1.5rem; }
         .sidebar-fixed {
             position: fixed; top: 90px; left: 0; width: 250px;
-            height: calc(100vh - 90px); background: linear-gradient( 180deg,#F8FAFC,#EEF4FF);;
+            height: calc(100vh - 90px); background: linear-gradient( 180deg,#f7f8f8,#f7f8f8);;
             padding: 15px; z-index: 98; overflow-y: auto;
             box-shadow: 2px 0 10px rgba(0,0,0,0.08);
             display: flex; flex-direction: column; align-items: center;
@@ -31,8 +31,8 @@
             display: flex; align-items: center; gap: 8px;
             padding: 8px 12px; color: #333; border-radius: 5px;
         }
-        .menu-link:hover { background-color: #f4c0ef; }
-        .menu-link.active { background-color: #741a75; color: white !important; }
+        .menu-link:hover { background-color: #1976D2; }
+        .menu-link.active { background-color: #1976D2; color: white !important; }
         .menu-icon { font-size: 1rem; width: 20px; text-align: center; }
         .main-content { margin-left: 250px; margin-top: 90px; padding: 20px; min-height: calc(100vh - 90px); }
     </style>

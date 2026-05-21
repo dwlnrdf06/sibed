@@ -36,7 +36,7 @@
 
 {{-- GRAFIK LINE CHART --}}
 <div class="card shadow-sm mb-4">
-    <div class="card-header fw-bold">Grafik BOR, AVLOS, BTO, TOI</div>
+    <div class="card-header fw-bold">GRAFIK BOR, AVLOS, BTO, TOI</div>
     <div class="card-body">
         <canvas id="lineChartRekap" height="80"></canvas>
     </div>
