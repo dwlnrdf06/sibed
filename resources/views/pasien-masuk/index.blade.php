@@ -97,48 +97,35 @@ function cariPasien(keyword) {
     fetch(`/api/cari-pasien?q=${encodeURIComponent(keyword)}`)
         .then(res => res.json())
         .then(data => {
+            console.log('Data:', data); // ← cek di console browser
             dropdown.innerHTML = '';
 
             if (data.length === 0) {
-                dropdown.innerHTML = `
-                    <div style="padding:12px 15px; color:#999; font-size:13px; font-style:italic;">
-                        Pasien baru — isi No RM secara manual
-                    </div>`;
+                dropdown.innerHTML = `<div style="padding:12px 15px; color:#999; font-size:13px;">Pasien tidak ditemukan</div>`;
                 dropdown.style.display = 'block';
                 return;
             }
 
             data.forEach(pasien => {
                 const item = document.createElement('div');
-                item.style.cssText = `
-                    padding: 10px 15px;
-                    cursor: pointer;
-                    border-bottom: 1px solid #f0f0f0;
-                    font-size: 13px;
-                    transition: background 0.2s;
-                `;
+                item.style.cssText = 'padding:10px 15px; cursor:pointer; border-bottom:1px solid #f0f0f0; font-size:13px;';
                 item.innerHTML = `
-                    <div style="font-weight:600; color:#333;">${pasien.nama_pasien}</div>
+                    <div style="font-weight:600;">${pasien.nama_pasien}</div>
                     <div style="color:#888; font-size:12px;">No RM: ${pasien.no_rm}</div>
                 `;
-
                 item.onmouseover = () => item.style.background = '#f8f0ff';
                 item.onmouseout  = () => item.style.background = 'white';
-
                 item.onclick = () => {
                     document.getElementById('nama_pasien_input').value = pasien.nama_pasien;
                     document.getElementById('no_rm_input').value        = pasien.no_rm;
                     dropdown.style.display = 'none';
                 };
-
                 dropdown.appendChild(item);
             });
 
             dropdown.style.display = 'block';
         })
-        .catch(() => {
-            dropdown.style.display = 'none';
-        });
+        .catch(err => console.error('Error:', err));
 }
 
 // Tutup dropdown kalau klik di luar
