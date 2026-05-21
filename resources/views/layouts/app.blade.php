@@ -12,7 +12,7 @@
         * { font-family: 'Poppins', sans-serif !important; box-sizing: border-box; }
         body { margin: 0; padding: 0; background: #f5f5f5; overflow-x: hidden; }
         .navbar-gradient {
-            background: linear-gradient(to right, #741a75, #f4c0ef);
+            background: #1976D2;
             min-height: 90px; padding: 20px; position: fixed;
             top: 0; left: 0; right: 0; z-index: 99;
             display: flex; align-items: center;
@@ -21,7 +21,7 @@
         .navbar-brand { font-size: 1.5rem; }
         .sidebar-fixed {
             position: fixed; top: 90px; left: 0; width: 250px;
-            height: calc(100vh - 90px); background: #f8f9fa;
+            height: calc(100vh - 90px); background: linear-gradient( 180deg,#F8FAFC,#EEF4FF);;
             padding: 15px; z-index: 98; overflow-y: auto;
             box-shadow: 2px 0 10px rgba(0,0,0,0.08);
             display: flex; flex-direction: column; align-items: center;
