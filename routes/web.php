@@ -29,10 +29,12 @@ Route::middleware('auth')->group(function () {
         ->name('sensus.print')
         ->middleware('role:admin,perawat,pmik');
 
-    // Pasien Masuk & Keluar → admin & perawat
+    // Pasien Masuk → admin & perawat
     Route::resource('/pasien-masuk', PasienMasukController::class)
+        ->only(['index', 'store'])
         ->middleware('role:admin,perawat');
-    
+
+    // API cari pasien
     Route::get('/api/cari-pasien', function(\Illuminate\Http\Request $request) {
         $keyword = $request->q;
         $pasien  = \App\Models\Pasien::where(function($q) use ($keyword) {
@@ -44,7 +46,9 @@ Route::middleware('auth')->group(function () {
         return response()->json($pasien);
     })->middleware('auth');
 
+    // Pasien Keluar → admin & perawat
     Route::resource('/pasien-keluar', PasienKeluarController::class)
+        ->only(['index', 'store'])
         ->middleware('role:admin,perawat');
 
     Route::get('/api/cari-pasien-aktif', [PasienKeluarController::class, 'cariPasienAktif']);
@@ -57,13 +61,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/rekap/print/{bulan}/{tahun}', [RekapController::class, 'print'])
         ->name('rekap.print')
         ->middleware('role:admin,pmik');
-    
-        Route::get('/api/cari-pasien', function(\Illuminate\Http\Request $request) {
-        $keyword = $request->q;
-        $pasien  = \App\Models\Pasien::where('nama_pasien', 'LIKE', "%{$keyword}%")
-                    ->orWhere('no_rm', 'LIKE', "%{$keyword}%")
-                    ->limit(10)
-                    ->get(['id', 'nama_pasien', 'no_rm']);
-        return response()->json($pasien);
-    })->middleware('auth');
 });
