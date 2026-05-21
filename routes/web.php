@@ -32,6 +32,17 @@ Route::middleware('auth')->group(function () {
     // Pasien Masuk & Keluar → admin & perawat
     Route::resource('/pasien-masuk', PasienMasukController::class)
         ->middleware('role:admin,perawat');
+    
+    Route::get('/api/cari-pasien', function(\Illuminate\Http\Request $request) {
+        $keyword = $request->q;
+        $pasien  = \App\Models\Pasien::where(function($q) use ($keyword) {
+                        $q->where('nama_pasien', 'LIKE', "%{$keyword}%")
+                        ->orWhere('no_rm', 'LIKE', "%{$keyword}%");
+                    })
+                    ->limit(10)
+                    ->get(['id', 'nama_pasien', 'no_rm']);
+        return response()->json($pasien);
+    })->middleware('auth');
 
     Route::resource('/pasien-keluar', PasienKeluarController::class)
         ->middleware('role:admin,perawat');
