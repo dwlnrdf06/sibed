@@ -83,7 +83,7 @@ document.getElementById('cara_masuk').addEventListener('change', function () {
 
     const pindahanGroup = document.getElementById('pindahan_group');
 
-    // default disembunyikannnnnn
+    // default disembunyikann
     pindahanGroup.style.display = 'none';
 
     // kalau pindahan ruangan → tampilkan
