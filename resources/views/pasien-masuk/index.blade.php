@@ -15,36 +15,20 @@
         @csrf
         <div class="row">
 
-            {{-- NAMA PASIEN dengan autocomplete --}}
+            {{-- NAMA PASIEN --}}
             <div class="col-md-6 mb-2" style="position: relative;">
                 <label>Nama Pasien</label>
                 <input type="text" id="nama_pasien_input" name="nama_pasien"
                     class="form-control" autocomplete="off"
-                    placeholder="Ketik nama atau No RM untuk mencari..." required
+                    placeholder="Masukkan Nama Pasien" required
                     oninput="cariPasien(this.value)">
-
-                {{-- Dropdown hasil pencarian --}}
-                <div id="dropdown_pasien"
-                    style="display:none; position:absolute; top:100%; left:0; right:0;
-                           background:white; border:1px solid #ddd; border-radius:8px;
-                           box-shadow:0 4px 15px rgba(0,0,0,0.1); z-index:999;
-                           max-height:250px; overflow-y:auto;">
-                </div>
             </div>
 
             {{-- NO RM --}}
-            <div class="col-md-6 mb-2" style="position: relative;">
+            <div class="col-md-6 mb-2">
                 <label>No RM</label>
                 <input type="text" id="no_rm_input" name="no_rm"
-                    class="form-control" autocomplete="off"
-                    placeholder="Isi Nomor RM" required
-                    oninput="cariPasien(this.value)">
-                <div id="dropdown_norm"
-                    style="display:none; position:absolute; top:100%; left:0; right:0;
-                        background:white; border:1px solid #ddd; border-radius:8px;
-                        box-shadow:0 4px 15px rgba(0,0,0,0.1); z-index:999;
-                        max-height:250px; overflow-y:auto;">
-                </div>
+                    class="form-control" placeholder="Isi Nomor RM" required>
             </div>
 
             {{-- CARA MASUK --}}
@@ -68,99 +52,61 @@
                 </select>
             </div>
 
-            {{-- RUJUKAN DARI --}}
-            <div class="col-md-4 mb-2" id="rujukan_group">
+            {{-- RUJUKAN DARI (selalu tampil) --}}
+            <div class="col-md-4 mb-2">
                 <label>Rujukan Dari</label>
                 <input type="text" name="rujukan_dari" id="rujukan_dari"
                        class="form-control" placeholder="Isi jika rujukan">
             </div>
 
-            {{-- PINDAHAN DARI --}}
-            <div class="col-md-4 mb-2" id="pindahan_group" style="display:none;">
+            {{-- PINDAHAN DARI (selalu tampil, dropdown) --}}
+            <div class="col-md-4 mb-2">
                 <label>Pindahan Dari</label>
-                <input type="text" name="pindahan_dari" id="pindahan_dari"
-                       class="form-control" placeholder="Isi jika pindahan ruangan">
+                <select name="pindahan_dari" id="pindahan_dari" class="form-select">
+                    <option value="">-- Pilih Kamar Asal --</option>
+                    <optgroup label="Kelas 1">
+                        <option value="Tulip 1a (Kelas 1)">Tulip 1a (Kelas 1)</option>
+                        <option value="Tulip 1b (Kelas 1)">Tulip 1b (Kelas 1)</option>
+                        <option value="Tulip 1c (Kelas 1)">Tulip 1c (Kelas 1)</option>
+                        <option value="Tulip 1d (Kelas 1)">Tulip 1d (Kelas 1)</option>
+                        <option value="Tulip 1e (Kelas 1)">Tulip 1e (Kelas 1)</option>
+                    </optgroup>
+                    <optgroup label="Kelas 2">
+                        <option value="Flamboyan 2a (Kelas 2)">Flamboyan 2a (Kelas 2)</option>
+                        <option value="Flamboyan 2b (Kelas 2)">Flamboyan 2b (Kelas 2)</option>
+                        <option value="Flamboyan 2c (Kelas 2)">Flamboyan 2c (Kelas 2)</option>
+                        <option value="Flamboyan 2d (Kelas 2)">Flamboyan 2d (Kelas 2)</option>
+                        <option value="Flamboyan 2e (Kelas 2)">Flamboyan 2e (Kelas 2)</option>
+                    </optgroup>
+                    <optgroup label="Kelas 3">
+                        <option value="Melati 3a (Kelas 3)">Melati 3a (Kelas 3)</option>
+                        <option value="Melati 3b (Kelas 3)">Melati 3b (Kelas 3)</option>
+                        <option value="Melati 3c (Kelas 3)">Melati 3c (Kelas 3)</option>
+                        <option value="Melati 3d (Kelas 3)">Melati 3d (Kelas 3)</option>
+                    </optgroup>
+                    <optgroup label="VIP">
+                        <option value="Mawar a (VIP)">Mawar a (VIP)</option>
+                        <option value="Mawar b (VIP)">Mawar b (VIP)</option>
+                        <option value="Mawar c (VIP)">Mawar c (VIP)</option>
+                    </optgroup>
+                    <optgroup label="VVIP">
+                        <option value="Anggrek a (VVIP)">Anggrek a (VVIP)</option>
+                        <option value="Anggrek b (VVIP)">Anggrek b (VVIP)</option>
+                        <option value="Anggrek c (VVIP)">Anggrek c (VVIP)</option>
+                    </optgroup>
+                </select>
             </div>
 
+            {{-- TANGGAL MASUK --}}
             <div class="col-md-6 mb-2">
                 <label>Tanggal Masuk</label>
                 <input type="date" name="tanggal_masuk" class="form-control" required>
             </div>
+
         </div>
 
         <button type="submit" class="btn btn-primary mt-3">Kirim</button>
     </form>
 </div>
-
-<script>
-function cariPasien(keyword) {
-    const dropdownNama = document.getElementById('dropdown_pasien');
-    const dropdownNorm = document.getElementById('dropdown_norm');
-
-    dropdownNama.style.display = 'none';
-    dropdownNorm.style.display = 'none';
-
-    if (keyword.length < 1) return;
-
-    fetch(`/api/cari-pasien?q=${encodeURIComponent(keyword)}`)
-        .then(res => res.json())
-        .then(data => {
-            const aktif = document.activeElement.id === 'no_rm_input'
-                ? dropdownNorm
-                : dropdownNama;
-
-            aktif.innerHTML = '';
-
-            if (data.length === 0) {
-                aktif.innerHTML = `<div style="padding:12px 15px; color:#999; font-size:13px;">Pasien tidak ditemukan</div>`;
-                aktif.style.display = 'block';
-                return;
-            }
-
-            data.forEach(pasien => {
-                const item = document.createElement('div');
-                item.style.cssText = 'padding:10px 15px; cursor:pointer; border-bottom:1px solid #f0f0f0; font-size:13px;';
-                item.innerHTML = `
-                    <div style="font-weight:600;">${pasien.nama_pasien}</div>
-                    <div style="color:#888; font-size:12px;">No RM: ${pasien.no_rm}</div>
-                `;
-                item.onmouseover = () => item.style.background = '#f8f0ff';
-                item.onmouseout  = () => item.style.background = 'white';
-                item.onclick = () => {
-                    document.getElementById('nama_pasien_input').value = pasien.nama_pasien;
-                    document.getElementById('no_rm_input').value        = pasien.no_rm;
-                    dropdownNama.style.display = 'none';
-                    dropdownNorm.style.display = 'none';
-                };
-                aktif.appendChild(item);
-            });
-
-            aktif.style.display = 'block';
-        })
-        .catch(err => console.error('Error:', err));
-}
-
-document.addEventListener('click', function(e) {
-    const dropdownNama = document.getElementById('dropdown_pasien');
-    const dropdownNorm = document.getElementById('dropdown_norm');
-    const inputNama    = document.getElementById('nama_pasien_input');
-    const inputNorm    = document.getElementById('no_rm_input');
-
-    if (!dropdownNama.contains(e.target) && e.target !== inputNama) {
-        dropdownNama.style.display = 'none';
-    }
-    if (!dropdownNorm.contains(e.target) && e.target !== inputNorm) {
-        dropdownNorm.style.display = 'none';
-    }
-});
-
-document.getElementById('cara_masuk').addEventListener('change', function () {
-    const value         = this.value;
-    const pindahanGroup = document.getElementById('pindahan_group');
-    pindahanGroup.style.display = value === 'Pindahan Ruangan' ? 'block' : 'none';
-});
-
-document.getElementById('cara_masuk').dispatchEvent(new Event('change'));
-</script>
 
 @endsection

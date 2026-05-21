@@ -83,7 +83,7 @@
                                 <td>{{ $pindahan[$i]->pasien->nama_pasien ?? '' }}</td>
                                 <td>{{ $pindahan[$i]->pasien->no_rm ?? '' }}</td>
                                 <td>{{ $pindahan[$i]->kamar->nama_kamar ?? '' }}</td>
-                                <td>{{ $pindahan[$i]->rujukan_dari ?? '-' }}</td>
+                                <td>{{ $pindahan[$i]->pindahan_dari ?? '-' }}</td>
                                 <!-- PASIEN RUJUKAN -->
         
                                 <td>{{ $rujukan[$i]->pasien->nama_pasien ?? '' }}</td>
