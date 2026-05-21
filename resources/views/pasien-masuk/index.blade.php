@@ -15,13 +15,21 @@
         @csrf
         <div class="row">
 
-            {{-- NAMA PASIEN--}}
+            {{-- NAMA PASIEN dengan autocomplete --}}
             <div class="col-md-6 mb-2" style="position: relative;">
                 <label>Nama Pasien</label>
                 <input type="text" id="nama_pasien_input" name="nama_pasien"
                     class="form-control" autocomplete="off"
-                    placeholder="Masukkan Nama Pasien" required
+                    placeholder="Ketik nama atau No RM untuk mencari..." required
                     oninput="cariPasien(this.value)">
+
+                {{-- Dropdown hasil pencarian --}}
+                <div id="dropdown_pasien"
+                    style="display:none; position:absolute; top:100%; left:0; right:0;
+                           background:white; border:1px solid #ddd; border-radius:8px;
+                           box-shadow:0 4px 15px rgba(0,0,0,0.1); z-index:999;
+                           max-height:250px; overflow-y:auto;">
+                </div>
             </div>
 
             {{-- NO RM --}}
@@ -52,17 +60,17 @@
                 </select>
             </div>
 
-            {{-- RUJUKAN DARI (untuk Rujukannnnnnnnnnnnnnnnnnnnnnn) --}}
+            {{-- RUJUKAN DARI --}}
             <div class="col-md-4 mb-2" id="rujukan_group">
-    <label>Rujukan Dari</label>
-    <input type="text" name="rujukan_dari" id="rujukan_dari"
-           class="form-control" placeholder="Isi jika rujukan">
-</div>
+                <label>Rujukan Dari</label>
+                <input type="text" name="rujukan_dari" id="rujukan_dari"
+                       class="form-control" placeholder="Isi jika rujukan">
+            </div>
 
-            {{-- PINDAHAN DARI (baru) --}}
-            <div class="col-md-4 mb-2">
+            {{-- PINDAHAN DARI --}}
+            <div class="col-md-4 mb-2" id="pindahan_group" style="display:none;">
                 <label>Pindahan Dari</label>
-                <input type="text" name="pindahan_dari" id="pindahan_dari" 
+                <input type="text" name="pindahan_dari" id="pindahan_dari"
                        class="form-control" placeholder="Isi jika pindahan ruangan">
             </div>
 
@@ -77,23 +85,78 @@
 </div>
 
 <script>
-document.getElementById('cara_masuk').addEventListener('change', function () {
+// ===== AUTOCOMPLETE PASIEN =====
+function cariPasien(keyword) {
+    const dropdown = document.getElementById('dropdown_pasien');
 
-    const value = this.value;
-
-    const pindahanGroup = document.getElementById('pindahan_group');
-
-    // default disembunyikan
-    pindahanGroup.style.display = 'none';
-
-    // kalau pindahan ruangan → tampilkan
-    if (value === 'Pindahan Ruangan') {
-        pindahanGroup.style.display = 'block';
+    if (keyword.length < 1) {
+        dropdown.style.display = 'none';
+        return;
     }
 
+    fetch(`/api/cari-pasien?q=${encodeURIComponent(keyword)}`)
+        .then(res => res.json())
+        .then(data => {
+            dropdown.innerHTML = '';
+
+            if (data.length === 0) {
+                dropdown.innerHTML = `
+                    <div style="padding:12px 15px; color:#999; font-size:13px; font-style:italic;">
+                        Pasien baru — isi No RM secara manual
+                    </div>`;
+                dropdown.style.display = 'block';
+                return;
+            }
+
+            data.forEach(pasien => {
+                const item = document.createElement('div');
+                item.style.cssText = `
+                    padding: 10px 15px;
+                    cursor: pointer;
+                    border-bottom: 1px solid #f0f0f0;
+                    font-size: 13px;
+                    transition: background 0.2s;
+                `;
+                item.innerHTML = `
+                    <div style="font-weight:600; color:#333;">${pasien.nama_pasien}</div>
+                    <div style="color:#888; font-size:12px;">No RM: ${pasien.no_rm}</div>
+                `;
+
+                item.onmouseover = () => item.style.background = '#f8f0ff';
+                item.onmouseout  = () => item.style.background = 'white';
+
+                item.onclick = () => {
+                    document.getElementById('nama_pasien_input').value = pasien.nama_pasien;
+                    document.getElementById('no_rm_input').value        = pasien.no_rm;
+                    dropdown.style.display = 'none';
+                };
+
+                dropdown.appendChild(item);
+            });
+
+            dropdown.style.display = 'block';
+        })
+        .catch(() => {
+            dropdown.style.display = 'none';
+        });
+}
+
+// Tutup dropdown kalau klik di luar
+document.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('dropdown_pasien');
+    const input    = document.getElementById('nama_pasien_input');
+    if (dropdown && !dropdown.contains(e.target) && e.target !== input) {
+        dropdown.style.display = 'none';
+    }
 });
 
-// trigger awal
+// ===== SHOW/HIDE PINDAHAN GROUP =====
+document.getElementById('cara_masuk').addEventListener('change', function () {
+    const value         = this.value;
+    const pindahanGroup = document.getElementById('pindahan_group');
+    pindahanGroup.style.display = value === 'Pindahan Ruangan' ? 'block' : 'none';
+});
+
 document.getElementById('cara_masuk').dispatchEvent(new Event('change'));
 </script>
 
