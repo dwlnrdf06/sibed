@@ -3,14 +3,14 @@
 @section('content')
 
 <h4 style="font-weight: bold; color: #333; margin-bottom: 5px;">
-    <i class="bi bi-person-fill-dash me-2" style="color:#741a75;"></i>
+    <i class="bi bi-person-fill-dash me-2" style="color:black;"></i>
     Form Pasien Keluar
 </h4>
 
 <div style="
     width: 60px;
     height: 4px;
-    background: linear-gradient(135deg, #741a75, #741a75);
+    background: blue;
     border-radius: 5px;
     margin-bottom: 25px;">
 </div>
@@ -30,7 +30,7 @@
 
             {{-- Nama Pasien --}}
             <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold" style="font-size:13px; color:#6B7280;">
+                <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
                     <i class="bi bi-person-fill me-1"></i>Nama Pasien
                 </label>
 
@@ -44,7 +44,7 @@
                         id="input_nama"
                         class="form-control"
                         autocomplete="off"
-                        placeholder="Ketik nama pasien..."
+                        placeholder="Isi Nama Pasien Menggunakan Huruf KAPITAL"
                         style="border-color:#6B7280;">
                 </div>
 
@@ -53,7 +53,7 @@
 
             {{-- No RM --}}
             <div class="col-md-3 mb-3">
-                <label class="form-label fw-semibold" style="font-size:13px; color:#6B7280;">
+                <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
                     <i class="bi bi-upc-scan me-1"></i>No RM
                 </label>
 
@@ -67,7 +67,7 @@
                         id="input_norm"
                         class="form-control"
                         autocomplete="off"
-                        placeholder="Ketik No RM..."
+                        placeholder="Isi No RM"
                         style="border-color:#6B7280;">
                 </div>
 
@@ -76,7 +76,7 @@
 
             {{-- Nama Kamar --}}
             <div class="col-md-3 mb-3">
-                <label class="form-label fw-semibold" style="font-size:13px; color:#6B7280;">
+                <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
                     <i class="bi bi-house-door-fill me-1"></i>Nama Kamar
                 </label>
 
@@ -112,7 +112,7 @@
 
             {{-- Keterangan Keluar --}}
             <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold" style="font-size:13px; color:#6B7280;">
+                <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
                     <i class="bi bi-clipboard2-pulse-fill me-1"></i>Keterangan Keluar
                 </label>
 
@@ -139,7 +139,7 @@
 
             {{-- Tanggal Masuk --}}
             <div class="col-md-3 mb-3">
-                <label class="form-label fw-semibold" style="font-size:13px; color:#6B7280;">
+                <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
                     <i class="bi bi-calendar-event-fill me-1"></i>Tgl Masuk
                 </label>
 
@@ -160,7 +160,7 @@
 
             {{-- Tanggal Keluar --}}
             <div class="col-md-3 mb-3">
-                <label class="form-label fw-semibold" style="font-size:13px; color:#6B7280;">
+                <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
                     <i class="bi bi-calendar2-check-fill me-1"></i>Tgl Keluar
                 </label>
 
@@ -180,7 +180,7 @@
 
             {{-- Dirujuk Ke --}}
             <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold" style="font-size:13px; color:#6B7280;">
+                <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
                     <i class="bi bi-hospital-fill me-1"></i>Dirujuk Ke
                 </label>
 
