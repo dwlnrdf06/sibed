@@ -4,34 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PasienMasuk extends Model
+class SensusHarian extends Model  // ← ganti jadi ini
 {
-    protected $table = 'pasien_masuk';
-
+    protected $table = 'sensus_harian';
+    
     protected $fillable = [
-        'pasien_id',
-        'kamar_id',
-        'cara_masuk',
-        'rujukan_dari',
-        'pindahan_dari',
-        'tanggal_masuk',
+        'tanggal',
+        'pasien_awal',
+        'pasien_baru',
+        'pasien_pindahan',
+        'pasien_rujukan',
+        'pasien_dipindahkan',
+        'pasien_pulang_sembuh',
+        'pasien_pulang_paksa',
+        'meninggal_lt48',
+        'meninggal_gte48',
+        'dirujuk',
+        'pasien_masih_dirawat',
     ];
-
-    // Relasi ke tabel pasien
-    public function pasien()
-    {
-        return $this->belongsTo(Pasien::class);
-    }
-
-    // Relasi ke tabel kamar
-    public function kamar()
-    {
-        return $this->belongsTo(Kamar::class);
-    }
-
-    // Relasi ke tabel pasien_keluar
-    public function pasienKeluar()
-    {
-        return $this->hasOne(PasienKeluar::class, 'pasien_id', 'pasien_id');
-    }
 }
