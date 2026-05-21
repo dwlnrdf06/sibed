@@ -15,7 +15,7 @@
         @csrf
         <div class="row">
 
-            {{-- NAMA PASIEN --}}
+            {{-- NAMA PASIENNNNNN --}}
             <div class="col-md-6 mb-2" style="position: relative;">
                 <label>Nama Pasien</label>
                 <input type="text" id="nama_pasien_input" name="nama_pasien"
