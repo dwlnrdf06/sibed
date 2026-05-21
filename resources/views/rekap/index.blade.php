@@ -34,9 +34,13 @@
     </div>
 </div>
 
-
-
-
+{{-- GRAFIK LINE CHART --}}
+<div class="card shadow-sm mb-4">
+    <div class="card-header fw-bold">Grafik BOR, AVLOS, BTO, TOI</div>
+    <div class="card-body">
+        <canvas id="lineChartRekap" height="80"></canvas>
+    </div>
+</div>
 
 {{-- TABEL REKAPITULASI --}}
 <div class="table-responsive mt-3">
@@ -126,4 +130,78 @@
         🖨️ Print
     </a>
 </div>
+
+{{-- SCRIPT CHART.JS --}}
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labels = {!! json_encode(collect($rekap)->pluck('tanggal')) !!};
+    const dataBor  = {!! json_encode(collect($rekap)->pluck('bor')->map(fn($v) => $v ?: 0)) !!};
+    const dataAvlos = {!! json_encode(collect($rekap)->pluck('avlos')->map(fn($v) => $v ?: 0)) !!};
+    const dataBto  = {!! json_encode(collect($rekap)->pluck('bto')->map(fn($v) => $v ?: 0)) !!};
+    const dataToi  = {!! json_encode(collect($rekap)->pluck('toi')->map(fn($v) => $v ?: 0)) !!};
+
+    new Chart(document.getElementById('lineChartRekap'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'BOR (%)',
+                    data: dataBor,
+                    borderColor: '#0d6efd',
+                    backgroundColor: 'rgba(13,110,253,0.08)',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 3
+                },
+                {
+                    label: 'AVLOS',
+                    data: dataAvlos,
+                    borderColor: '#198754',
+                    backgroundColor: 'rgba(25,135,84,0.08)',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 3
+                },
+                {
+                    label: 'BTO',
+                    data: dataBto,
+                    borderColor: '#ffc107',
+                    backgroundColor: 'rgba(255,193,7,0.08)',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 3
+                },
+                {
+                    label: 'TOI',
+                    data: dataToi,
+                    borderColor: '#dc3545',
+                    backgroundColor: 'rgba(220,53,69,0.08)',
+                    tension: 0.3,
+                    fill: true,
+                    pointRadius: 3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                tooltip: { mode: 'index', intersect: false }
+            },
+            scales: {
+                x: {
+                    title: { display: true, text: 'Tanggal' }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Nilai' }
+                }
+            }
+        }
+    });
+</script>
+@endpush
+
 @endsection
