@@ -4,40 +4,57 @@
 <h4 class="mb-4">Ketersediaan Tempat Tidur</h4>
 
 {{-- CARD SUMMARY --}}
-<div class="row mb-4">
+<div class="row g-4 mb-4">
+
+    <!-- Total Kapasitas -->
     <div class="col-md-4">
-        <div class="card text-center shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #f8f0ff, #e8d5f5);">
-            <div class="card-body py-4">
-                <p class="text-muted mb-1">Total Kapasitas</p>
-                <h2 class="fw-bold" style="color: #741a75;">{{ $totalKapasitas }}</h2>
-                <small class="text-muted">Tempat Tidur</small>
+        <div class="modern-card border-blue">
+            <div class="card-body text-center">
+                <h5 class="card-title">TOTAL KAPASITAS</h5>
+                <h1 class="fw-bold text-blue">{{ $totalKapasitas }}</h1>
+                <p class="text-muted mb-0">Tempat Tidur</p>
             </div>
         </div>
     </div>
+
+    <!-- Terisi -->
     <div class="col-md-4">
-        <div class="card text-center shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #fff0f0, #ffd5d5);">
-            <div class="card-body py-4">
-                <p class="text-muted mb-1">Terisi</p>
-                <h2 class="fw-bold" style="color: #c0392b;">{{ $terisi }}</h2>
-                <small class="text-muted">Tempat Tidur</small>
+        <div class="modern-card border-red">
+            <div class="card-body text-center">
+                <h5 class="card-title">TERISI</h5>
+                <h1 class="fw-bold text-red">{{ $terisi }}</h1>
+                <p class="text-muted mb-0">Tempat Tidur</p>
             </div>
         </div>
     </div>
+
+    <!-- Tersedia -->
     <div class="col-md-4">
-        <div class="card text-center shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #f0fff4, #d5f5e3);">
-            <div class="card-body py-4">
-                <p class="text-muted mb-1">Tersedia</p>
-                <h2 class="fw-bold" style="color: #1e8449;">{{ $tersedia }}</h2>
-                <small class="text-muted">Tempat Tidur</small>
+        <div class="modern-card border-green">
+            <div class="card-body text-center">
+                <h5 class="card-title">TERSEDIA</h5>
+                <h1 class="fw-bold text-green">{{ $tersedia }}</h1>
+                <p class="text-muted mb-0">Tempat Tidur</p>
             </div>
         </div>
     </div>
+
 </div>
 
 {{-- TABEL KAMAR --}}
-<h5 class="text-center fw-bold mb-3">DATA KETERSEDIAAN KAMAR RAWAT INAP</h5>
-<div class="table-responsive">
-    <table class="table table-bordered text-center align-middle">
+<div class="card shadow-sm border-0 rounded-4">
+
+    <div class="card-header bg-white border-0 pt-4">
+        <h4 class="text-center fw-bold">
+            DATA KETERSEDIAAN KAMAR RAWAT INAP
+        </h4>
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table modern-table align-middle text-center">
         <thead class="table-primary">
             <tr>
                 <th>Jenis Kamar</th>
@@ -169,6 +186,92 @@
             @endforeach
         </tbody>
     </table>
-</div>
+
+            </div>
+
+        </div>
+    </div>
+<style>
+.modern-card{
+    background: white;
+    border-radius: 12px;
+    min-height: 180px;
+
+    border-left: 12px solid;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+    transition: all 0.3s ease;
+}
+
+.modern-card:hover{
+    transform: translateY(-5px);
+}
+
+.border-blue{
+    border-color: #2563eb;
+}
+
+.border-red{
+    border-color: #e63946;
+}
+
+.border-green{
+    border-color: #2a9d8f;
+}
+
+.text-blue{
+    color: #2563eb;
+}
+
+.text-red{
+    color: #e63946;
+}
+
+.text-green{
+    color: #2a9d8f;
+}
+
+.card-title{
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+.modern-table{
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+}
+
+.modern-table thead{
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+}
+
+.modern-table thead th{
+    border: none;
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.modern-table tbody td{
+    padding: 14px;
+    vertical-align: middle;
+    border-color: #e5e7eb;
+}
+
+.modern-table tbody tr:hover{
+    background-color: #f8fafc;
+    transition: 0.2s;
+}
+
+.modern-table{
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+</style>
 
 @endsection
