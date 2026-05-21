@@ -59,7 +59,7 @@
            class="form-control" placeholder="Isi jika rujukan">
 </div>
 
-            {{-- PINDAHAN DARI (baru) --}}
+            {{-- PINDAHAN DARI (baruuuuu) --}}
             <div class="col-md-4 mb-2">
                 <label>Pindahan Dari</label>
                 <input type="text" name="pindahan_dari" id="pindahan_dari" 
