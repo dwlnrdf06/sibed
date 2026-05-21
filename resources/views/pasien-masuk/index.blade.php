@@ -15,7 +15,7 @@
         @csrf
         <div class="row">
 
-            {{-- NAMA PASIENNNNNN --}}
+            {{-- NAMA PASIEN--}}
             <div class="col-md-6 mb-2" style="position: relative;">
                 <label>Nama Pasien</label>
                 <input type="text" id="nama_pasien_input" name="nama_pasien"
@@ -52,14 +52,14 @@
                 </select>
             </div>
 
-            {{-- RUJUKAN DARI (untuk Rujukan) --}}
+            {{-- RUJUKAN DARI (untuk Rujukannnnnnnnnnnnnnnnnnnnnnn) --}}
             <div class="col-md-4 mb-2" id="rujukan_group">
     <label>Rujukan Dari</label>
     <input type="text" name="rujukan_dari" id="rujukan_dari"
            class="form-control" placeholder="Isi jika rujukan">
 </div>
 
-            {{-- PINDAHAN DARI (baruuuuu) --}}
+            {{-- PINDAHAN DARI (baru) --}}
             <div class="col-md-4 mb-2">
                 <label>Pindahan Dari</label>
                 <input type="text" name="pindahan_dari" id="pindahan_dari" 
@@ -83,7 +83,7 @@ document.getElementById('cara_masuk').addEventListener('change', function () {
 
     const pindahanGroup = document.getElementById('pindahan_group');
 
-    // default disembunyikann
+    // default disembunyikan
     pindahanGroup.style.display = 'none';
 
     // kalau pindahan ruangan → tampilkan
