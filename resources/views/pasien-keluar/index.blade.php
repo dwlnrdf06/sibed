@@ -145,7 +145,7 @@ document.getElementById('input_nama').addEventListener('input', function() {
     cariPasien(this.value);
 });
 
-// Trigger dari kolom No RM
+// Trigger dari kolom No RMMMM
 document.getElementById('input_norm').addEventListener('input', function() {
     cariPasien(this.value);
 });
