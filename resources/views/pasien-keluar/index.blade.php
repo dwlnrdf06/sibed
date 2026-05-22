@@ -75,35 +75,41 @@
             </div>
 
             {{-- Nama Kamar --}}
-            <div class="col-md-3 mb-3">
-                <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-house-door-fill me-1"></i>Nama Kamar
-                </label>
+<div class="col-md-3 mb-3">
+    <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
+        <i class="bi bi-house-door-fill me-1"></i>Nama Kamar
+    </label>
 
-                <div class="input-group">
-                    <span class="input-group-text"
-                        style="background:#f3f4f6; border-color:#6B7280;">
-                        <i class="bi bi-house-door-fill" style="color:#6B7280;"></i>
-                    </span>
+    <div class="input-group">
+        <span class="input-group-text"
+            style="background:#f3f4f6; border-color:#6B7280;">
+            <i class="bi bi-house-door-fill" style="color:#6B7280;"></i>
+        </span>
 
-                    <select name="kamar_id"
-                        id="kamar_id"
-                        class="form-select"
-                        disabled
-                        style="border-color:#6B7280;">
+        <select id="kamar_id"
+            class="form-select pe-none"
+            disabled
+            style="border-color:#6B7280; 
+                   background-color: #f9fafb; 
+                   color: black;
+                   appearance: none; 
+                   -webkit-appearance: none; 
+                   -moz-appearance: none;
+                   background-image: none !important; /* INI KUNCINYA */
+                   padding-right: 12px; /* Kembalikan padding kanan agar text tidak terlalu ke kanan */">
 
-                        <option value="">-- otomatis --</option>
+            <option value="">-</option>
 
-                        @foreach($kamar as $k)
-                            <option value="{{ $k->id }}">
-                                {{ $k->nama_kamar }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+            @foreach($kamar as $k)
+                <option value="{{ $k->id }}">
+                    {{ $k->nama_kamar }}
+                </option>
+            @endforeach
+        </select>
+    </div>
 
-                <input type="hidden" name="kamar_id" id="kamar_id_hidden">
-            </div>
+    <input type="hidden" name="kamar_id" id="kamar_id_hidden">
+</div>
 
             {{-- Info Pasien --}}
             <div class="col-12 mb-2">
