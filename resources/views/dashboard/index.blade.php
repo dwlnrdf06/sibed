@@ -1,6 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
+
+{{-- GREETING --}}
+<div class="mb-4">
+    @php
+        $role = auth()->user()->role;
+        $greeting = match($role) {
+            'admin'   => 'Hello, Admin! 👋',
+            'perawat' => 'Hello, Perawat! 👋',
+            'pmik'    => 'Hello, PMIK! 👋',
+            default   => 'Hello! 👋'
+        };
+    @endphp
+
+    <h5 style="font-weight: 700; font-size: 20px; color: #333;">
+        {{ $greeting }}
+    </h5>
+    <p style="font-size: 13px; color: #666; margin-top: 4px;">
+        Selamat datang, di Sistem Manajemen Tempat Tidur Rawat Inap
+    </p>
+</div>
+
 <h4 class="mb-4">Ketersediaan Tempat Tidur</h4>
 
 {{-- CARD SUMMARY --}}
