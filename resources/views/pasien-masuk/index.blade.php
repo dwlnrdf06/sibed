@@ -253,81 +253,87 @@
             </div>
 
             {{-- ================= PINDAHAN DARI ================= --}}
-            <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-3">
 
-                <label class="form-label fw-semibold"
-                    style="font-size: 15px; color:#6B7280;">
+                    <label class="form-label fw-semibold"
+                        style="font-size: 15px; color:#6B7280;">
 
-                    <i class="bi bi-arrow-left-right me-1"></i>
-                    Pindahan Dari
+                        <i class="bi bi-arrow-left-right me-1"></i>
+                        Pindahan Dari
 
-                </label>
+                    </label>
 
-                <div class="input-group">
+                    <div class="input-group">
 
-                    <span class="input-group-text"
-                        style="background:#f3f4f6; border-color:#6B7280;">
+                        <span class="input-group-text"
+                            style="background:#f3f4f6; border-color:#6B7280;">
 
-                        <i class="bi bi-box-arrow-in-right"
-                            style="color:#6B7280;"></i>
+                            <i class="bi bi-box-arrow-in-right"
+                                style="color:#6B7280;"></i>
 
-                    </span>
+                        </span>
 
-                    <select name="pindahan_dari"
-                        id="pindahan_dari"
-                        class="form-select"
-                        style="border-color:#6B7280;">
+                        <select name="pindahan_dari"
+                            id="pindahan_dari"
+                            class="form-select"
+                            style="border-color:#6B7280;">
 
-                        <option value="">-- Pilih Kamar Asal --</option>
+                            <option value="">-- Pilih Kamar Asal --</option>
 
-                        <optgroup label="Kelas 1">
-                            <option value="Tulip 1a (Kelas 1)">Tulip 1a (Kelas 1)</option>
-                            <option value="Tulip 1b (Kelas 1)">Tulip 1b (Kelas 1)</option>
-                        </optgroup>
+                            {{-- Mengelompokkan kamar otomatis berdasarkan kolom kelas_kamar --}}
+                            @if(isset($list_kamar) && $list_kamar->count() > 0)
+                                @foreach($list_kamar->groupBy('kelas_kamar') as $kelasKamar => $grupKamar)
+                                    <optgroup label="{{ $kelasKamar }}">
+                                        @foreach($grupKamar as $kamar)
+                                            {{-- Value disesuaikan dengan format teks sebelumnya: Nama Kamar (Kelas) --}}
+                                            <option value="{{ $kamar->nama_kamar }} ({{ $kamar->kelas_kamar }})">
+                                                {{ $kamar->nama_kamar }} ({{ $kamar->kelas_kamar }})
+                                            </option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                            @else
+                                <option value="" disabled>Data kamar kosong. Silakan jalankan seeder terlebih dahulu.</option>
+                            @endif
 
-                        <optgroup label="Kelas 2">
-                            <option value="Flamboyan 2a (Kelas 2)">Flamboyan 2a (Kelas 2)</option>
-                            <option value="Flamboyan 2b (Kelas 2)">Flamboyan 2b (Kelas 2)</option>
-                        </optgroup>
+                        </select>
 
-                    </select>
+                    </div>
+
+                </div>
+
+                {{-- ================= TANGGAL MASUK ================= --}}
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label fw-semibold"
+                        style="font-size:15px; color:#6B7280;">
+
+                        <i class="bi bi-calendar-event-fill me-1"></i>
+                        Tanggal Masuk
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text"
+                            style="background:#f3f4f6; border-color:#6B7280;">
+
+                            <i class="bi bi-calendar-event-fill"
+                                style="color:#6B7280;"></i>
+
+                        </span>
+
+                        <input type="date"
+                            name="tanggal_masuk"
+                            class="form-control"
+                            required
+                            style="border-color:#6B7280;">
+
+                    </div>
 
                 </div>
 
             </div>
-
-            {{-- ================= TANGGAL MASUK ================= --}}
-            <div class="col-md-6 mb-3">
-
-                <label class="form-label fw-semibold"
-                    style="font-size:15px; color:#6B7280;">
-
-                    <i class="bi bi-calendar-event-fill me-1"></i>
-                    Tanggal Masuk
-
-                </label>
-
-                <div class="input-group">
-
-                    <span class="input-group-text"
-                        style="background:#f3f4f6; border-color:#6B7280;">
-
-                        <i class="bi bi-calendar-event-fill"
-                            style="color:#6B7280;"></i>
-
-                    </span>
-
-                    <input type="date"
-                        name="tanggal_masuk"
-                        class="form-control"
-                        required
-                        style="border-color:#6B7280;">
-
-                </div>
-
-            </div>
-
-        </div>
 
         {{-- ================= BUTTON ================= --}}
         <button type="submit"
@@ -350,3 +356,94 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+function cariPasien(keyword, tipe) {
+    let dropdownId = (tipe === 'nama') ? 'dropdown_pasien' : 'dropdown_norm';
+    let dropdown = document.getElementById(dropdownId);
+    
+    if (keyword.trim().length === 0) {
+        dropdown.style.display = 'none';
+        dropdown.innerHTML = '';
+        return;
+    }
+
+    // Gaya container dropdown agar modern dan melayang mulus
+    dropdown.style.border = '1px solid #E5E7EB';
+    dropdown.style.borderRadius = '10px';
+    dropdown.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)';
+    dropdown.style.marginTop = '6px';
+    dropdown.style.transition = 'all 0.2s ease';
+
+    fetch(`/api/cari-pasien?q=${encodeURIComponent(keyword)}`)
+        .then(response => response.json())
+        .then(data => {
+            dropdown.innerHTML = '';
+            
+            if (data.length === 0) {
+                dropdown.innerHTML = `
+                    <div style="padding: 20px; color: #9CA3AF; font-size: 14px; text-align: center;">
+                        <i class="bi bi-emoji-frown d-block mb-2" style="font-size: 24px; color: #D1D5DB;"></i>
+                        Pasien lama tidak ditemukan
+                    </div>`;
+                dropdown.style.display = 'block';
+                return;
+            }
+
+            dropdown.style.display = 'block';
+            
+            data.forEach(pasien => {
+                let item = document.createElement('div');
+                
+                // Mengatur padding item list & layout flex vertikal
+                item.style.padding = '12px 18px';
+                item.style.cursor = 'pointer';
+                item.style.borderBottom = '1px solid #F3F4F6';
+                item.style.display = 'flex';
+                item.style.flexDirection = 'column'; // Membuat teks menumpuk ke bawah
+                item.style.gap = '2px'; // Jarak tipis antara Nama dan No RM
+                item.style.transition = 'all 0.15s ease';
+                
+                item.innerHTML = `
+                    <div style="color: #000000; font-weight: 700; font-size: 14.5px; letter-spacing: 0.3px;">
+                        ${pasien.nama_pasien.toUpperCase()}
+                    </div>
+                    <div style="color: #6B7280; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 5px; margin-top: 2px;">
+                        <span>No. RM:</span>
+                        <span style="font-family: monospace; font-weight: 700; color: #374151;">${pasien.no_rm}</span>
+                    </div>
+                `;
+                
+                // Efek hover: latar belakang biru muda pastel cerah & teks sedikit bergeser ke kanan
+                item.onmouseenter = () => {
+                    item.style.backgroundColor = '#EFF6FF';
+                    item.style.paddingLeft = '24px';
+                };
+                item.onmouseleave = () => {
+                    item.style.backgroundColor = 'white';
+                    item.style.paddingLeft = '18px';
+                };
+                
+                item.onclick = function() {
+                    document.getElementById('nama_pasien_input').value = pasien.nama_pasien.toUpperCase();
+                    document.getElementById('no_rm_input').value = pasien.no_rm;
+                    
+                    document.getElementById('dropdown_pasien').style.display = 'none';
+                    document.getElementById('dropdown_norm').style.display = 'none';
+                };
+                
+                dropdown.appendChild(item);
+            });
+        })
+        .catch(error => console.error('Error autocomplete:', error));
+}
+
+document.addEventListener('click', function(e) {
+    if (e.target.id !== 'nama_pasien_input' && e.target.id !== 'no_rm_input') {
+        document.getElementById('dropdown_pasien').style.display = 'none';
+        document.getElementById('dropdown_norm').style.display = 'none';
+    }
+});
+</script>
+@endpush
