@@ -66,7 +66,7 @@
             width: 250px;
             height: calc(100vh - 95px);
 
-            background: #f7f8f8;
+            background: #1565C0;
 
             padding: 15px;
 
@@ -93,7 +93,7 @@
 
             padding: 10px 14px;
 
-            color: #333;
+            color: #fff9f9;
 
             border-radius: 8px;
 
@@ -106,8 +106,8 @@
         }
 
         .menu-link.active {
-            background-color: #1976D2;
-            color: white !important;
+            background-color: #e6e9ef;
+            color: black !important;
         }
 
         .menu-icon {
