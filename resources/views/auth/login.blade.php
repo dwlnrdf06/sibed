@@ -297,7 +297,7 @@
         <div class="circle4"></div>
         <div class="circle5"></div>
 
-        <img src="{{ asset('images/logo.png') }}" alt="Logo RS" class="top-logo">
+        <img src="{{ asset('images/logo2.png') }}" alt="Logo RS" class="top-logo">
 
         <h1>WELCOME!</h1>
 
