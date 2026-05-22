@@ -95,8 +95,8 @@
                    appearance: none; 
                    -webkit-appearance: none; 
                    -moz-appearance: none;
-                   background-image: none !important; /* INI KUNCINYA */
-                   padding-right: 12px; /* Kembalikan padding kanan agar text tidak terlalu ke kanan */">
+                   background-image: none !important; 
+                   padding-right: 12px; 
 
             <option value="">-</option>
 
