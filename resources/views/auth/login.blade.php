@@ -7,9 +7,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
     <style>
@@ -33,7 +35,7 @@
         .container{
             width:1000px;
             height:560px;
-            background:transparent; 
+            background:transparent;
             border-radius:30px;
             overflow:hidden;
             display:flex;
@@ -52,24 +54,53 @@
             align-items:center;
             padding:60px;
             overflow:hidden;
-            border-top-left-radius: 30px;
-            border-bottom-left-radius: 30px;
+            border-top-left-radius:30px;
+            border-bottom-left-radius:30px;
         }
 
-        /* ================= ANIMASI BERJALAN NAIK TURUN ================= */
+        /* ================= ANIMASI ================= */
+
         @keyframes walkUpDown {
-            0% {
-                transform: translateY(0px);
+
+            0%{
+                transform:translateY(0px);
             }
-            50% {
-                transform: translateY(-35px); /* Naik lebih tinggi agar gerakan berjalan terlihat jelas */
+
+            50%{
+                transform:translateY(-35px);
             }
-            100% {
-                transform: translateY(0px);
+
+            100%{
+                transform:translateY(0px);
             }
+
         }
 
-        /* bulatan dekorasi */
+        @keyframes waveHand {
+
+            0%{
+                transform:rotate(0deg);
+            }
+
+            25%{
+                transform:rotate(15deg);
+            }
+
+            50%{
+                transform:rotate(-10deg);
+            }
+
+            75%{
+                transform:rotate(15deg);
+            }
+
+            100%{
+                transform:rotate(0deg);
+            }
+
+        }
+
+        /* ================= BULATAN ================= */
 
         .circle1{
             position:absolute;
@@ -79,7 +110,7 @@
             background:rgba(255,255,255,0.10);
             bottom:-90px;
             left:-70px;
-            animation: walkUpDown 7s ease-in-out infinite;
+            animation:walkUpDown 7s ease-in-out infinite;
         }
 
         .circle2{
@@ -90,7 +121,7 @@
             background:rgba(255,255,255,0.10);
             bottom:40px;
             left:130px;
-            animation: walkUpDown 9s ease-in-out infinite 1s; /* Jeda start 1 detik */
+            animation:walkUpDown 9s ease-in-out infinite 1s;
         }
 
         .circle3{
@@ -101,7 +132,7 @@
             background:rgba(255,255,255,0.08);
             top:50px;
             right:70px;
-            animation: walkUpDown 8s ease-in-out infinite 0.5s;
+            animation:walkUpDown 8s ease-in-out infinite 0.5s;
         }
 
         .circle4{
@@ -112,7 +143,7 @@
             background:rgba(255,255,255,0.12);
             top:180px;
             right:160px;
-            animation: walkUpDown 6s ease-in-out infinite 1.5s;
+            animation:walkUpDown 6s ease-in-out infinite 1.5s;
         }
 
         .circle5{
@@ -123,31 +154,52 @@
             background:rgba(255,255,255,0.15);
             top:120px;
             left:90px;
-            animation: walkUpDown 7.5s ease-in-out infinite 2s;
+            animation:walkUpDown 7.5s ease-in-out infinite 2s;
         }
 
+        /* ================= LOGO ================= */
+
         .top-logo{
-            width:170px;
+            width:240px;
             margin-bottom:35px;
             z-index:2;
         }
 
-        .left h1{
-            color:white;
-            font-size:60px;
-            font-weight:700;
-            margin-bottom:20px;
-            letter-spacing:2px;
+        /* ================= WELCOME ================= */
+
+        .welcome-text{
+            display:flex;
+            align-items:center;
+            gap:8px;
             z-index:2;
         }
 
+        .welcome-text h1{
+            color:white;
+            font-size:60px;
+            font-weight:700;
+            letter-spacing:2px;
+            margin:0;
+        }
+
+        .wave{
+    font-size:28px;
+    color:white;
+    animation:waveHand 2s infinite;
+    transform-origin:70% 70%;
+    margin-top:-2px;
+    display:flex;
+    align-items:center;
+}
+
         .left p{
             color:white;
-            font-size:16px; 
+            font-size:16px;
             text-align:center;
             line-height:1.6;
-            width:100%; 
+            width:100%;
             z-index:2;
+            margin-top:20px;
         }
 
         /* ================= RIGHT ================= */
@@ -159,8 +211,8 @@
             align-items:center;
             background:white;
             padding:50px;
-            border-top-right-radius: 30px;
-            border-bottom-right-radius: 30px;
+            border-top-right-radius:30px;
+            border-bottom-right-radius:30px;
         }
 
         .login-box{
@@ -173,7 +225,7 @@
             margin-bottom:40px;
             color:#222;
             font-weight:600;
-            text-align: center; 
+            text-align:center;
         }
 
         .custom-input-group{
@@ -187,27 +239,27 @@
             color:#555;
             font-size:15px;
             font-weight:500;
-            text-align: left; 
+            text-align:left;
         }
 
-        .input-with-icon {
-            position: relative;
-            width: 100%;
+        .input-with-icon{
+            position:relative;
+            width:100%;
         }
 
-        .input-with-icon i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
-            font-size: 18px;
-            transition: 0.3s;
+        .input-with-icon i{
+            position:absolute;
+            left:15px;
+            top:50%;
+            transform:translateY(-50%);
+            color:#666;
+            font-size:18px;
+            transition:0.3s;
         }
 
         .custom-input-group input{
             width:100%;
-            padding: 15px 15px 15px 45px; 
+            padding:15px 15px 15px 45px;
             border:1px solid #dcdcdc;
             border-radius:12px;
             background:#f5f7fb;
@@ -222,8 +274,8 @@
             box-shadow:0 0 10px rgba(25,118,210,0.2);
         }
 
-        .custom-input-group input:focus + i {
-            color: #1976d2;
+        .custom-input-group input:focus + i{
+            color:#1976d2;
         }
 
         .submit-btn{
@@ -262,21 +314,33 @@
             .left{
                 width:100%;
                 padding:50px 25px;
-                border-radius: 30px 30px 0 0;
+                border-radius:30px 30px 0 0;
             }
 
             .right{
                 width:100%;
                 padding:40px 25px;
-                border-radius: 0 0 30px 30px;
+                border-radius:0 0 30px 30px;
             }
 
-            .left h1{
-                font-size:42px;
+            .welcome-text{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    z-index:2;
+}
+
+            .wave{
+                font-size:25px;
             }
 
             .left p{
-                font-size:15px;
+                font-size:20px;
+            }
+
+            .top-logo{
+                width:190px;
             }
 
         }
@@ -299,7 +363,14 @@
 
         <img src="{{ asset('images/logo2.png') }}" alt="Logo RS" class="top-logo">
 
-        <h1>WELCOME!</h1>
+        {{-- WELCOME --}}
+        <div class="welcome-text">
+
+            <h1>WELCOME!</h1>
+
+            <div class="wave">👋🏻</div>
+
+        </div>
 
         <p>
             Sistem Manajemen Tempat Tidur Rawat Inap<br>
@@ -325,19 +396,31 @@
                 @csrf
 
                 <div class="custom-input-group">
+
                     <label>Username</label>
+
                     <div class="input-with-icon">
+
                         <input type="text" name="username" placeholder="Enter username" required>
+
                         <i class="bi bi-person-fill"></i>
+
                     </div>
+
                 </div>
 
                 <div class="custom-input-group">
+
                     <label>Password</label>
+
                     <div class="input-with-icon">
+
                         <input type="password" name="password" placeholder="Enter password" required>
+
                         <i class="bi bi-lock-fill"></i>
+
                     </div>
+
                 </div>
 
                 <button type="submit" class="submit-btn">
