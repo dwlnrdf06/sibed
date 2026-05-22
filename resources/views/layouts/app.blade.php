@@ -181,7 +181,7 @@
     <!-- LOGO -->
     <div class="d-flex justify-content-center align-items-center mb-4 mt-2">
 
-        <img src="{{ asset('images/logo.png') }}"
+        <img src="{{ asset('images/logo2.png') }}"
              width="300"
              alt="Logo SiBed"
              class="img-fluid">
