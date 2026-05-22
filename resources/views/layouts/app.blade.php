@@ -41,9 +41,11 @@
 
 <nav class="navbar navbar-expand-lg navbar-gradient shadow-sm">
     <div class="container-fluid">
-        <span class="navbar-brand fw-bold text-white">
-            Sistem Manajemen Tempat Tidur Rawat Inap (SiBed)
-        </span>
+        <a class="navbar-brand fw-bold text-white d-flex align-items-center gap-2" href="{{ route('dashboard') }}">
+            <span>Sistem Manajemen Tempat Tidur Rawat Inap</span>
+            
+            <img src="{{ asset('images/SiBedName.png') }}" alt="Logo" style="height: 40px; width: auto; object-fit: contain;">
+        </a>
         <span class="fw-semibold text-white" id="datetime"></span>
     </div>
 </nav>
