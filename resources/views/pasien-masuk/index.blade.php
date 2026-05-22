@@ -253,55 +253,48 @@
             </div>
 
             {{-- ================= PINDAHAN DARI ================= --}}
-                <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3">
 
-                    <label class="form-label fw-semibold"
-                        style="font-size: 15px; color:#6B7280;">
+                <label class="form-label fw-semibold"
+                    style="font-size: 15px; color:#6B7280;">
 
-                        <i class="bi bi-arrow-left-right me-1"></i>
-                        Pindahan Dari
+                    <i class="bi bi-arrow-left-right me-1"></i>
+                    Pindahan Dari
 
-                    </label>
+                </label>
 
-                    <div class="input-group">
+                <div class="input-group">
 
-                        <span class="input-group-text"
-                            style="background:#f3f4f6; border-color:#6B7280;">
+                    <span class="input-group-text"
+                        style="background:#f3f4f6; border-color:#6B7280;">
 
-                            <i class="bi bi-box-arrow-in-right"
-                                style="color:#6B7280;"></i>
+                        <i class="bi bi-box-arrow-in-right"
+                            style="color:#6B7280;"></i>
 
-                        </span>
+                    </span>
 
-                        <select name="pindahan_dari"
-                            id="pindahan_dari"
-                            class="form-select"
-                            style="border-color:#6B7280;">
+                    <select name="pindahan_dari"
+                        id="pindahan_dari"
+                        class="form-select"
+                        style="border-color:#6B7280;">
 
-                            <option value="">-- Pilih Kamar Asal --</option>
+                        <option value="">-- Pilih Kamar Asal --</option>
 
-                            {{-- Mengelompokkan kamar otomatis berdasarkan kolom kelas_kamar --}}
-                            @if(isset($list_kamar) && $list_kamar->count() > 0)
-                                @foreach($list_kamar->groupBy('kelas_kamar') as $kelasKamar => $grupKamar)
-                                    <optgroup label="{{ $kelasKamar }}">
-                                        @foreach($grupKamar as $kamar)
-                                            {{-- Value disesuaikan dengan format teks sebelumnya: Nama Kamar (Kelas) --}}
-                                            <option value="{{ $kamar->nama_kamar }} ({{ $kamar->kelas_kamar }})">
-                                                {{ $kamar->nama_kamar }} ({{ $kamar->kelas_kamar }})
-                                            </option>
-                                        @endforeach
-                                    </optgroup>
-                                @endforeach
-                            @else
-                                <option value="" disabled>Data kamar kosong. Silakan jalankan seeder terlebih dahulu.</option>
-                            @endif
+                        <optgroup label="Kelas 1">
+                            <option value="Tulip 1a (Kelas 1)">Tulip 1a (Kelas 1)</option>
+                            <option value="Tulip 1b (Kelas 1)">Tulip 1b (Kelas 1)</option>
+                        </optgroup>
 
-                        </select>
+                        <optgroup label="Kelas 2">
+                            <option value="Flamboyan 2a (Kelas 2)">Flamboyan 2a (Kelas 2)</option>
+                            <option value="Flamboyan 2b (Kelas 2)">Flamboyan 2b (Kelas 2)</option>
+                        </optgroup>
 
-                    </div>
+                    </select>
 
                 </div>
 
+            </div>
                 {{-- ================= TANGGAL MASUK ================= --}}
                 <div class="col-md-6 mb-3">
 
