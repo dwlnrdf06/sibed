@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<h4>Rekapitulasi Sensus Harian Rawat Inap</h4>
+<h4 style="font-weight: bold; color: #333; margin-bottom: 5px;">
+    <i class="bi bi-bar-chart-line menu-icon" style="color:black;"></i>
+    Rekapitulasi Rawat Inap
+</h4>
 
 {{-- FILTER BULAN & TAHUN --}}
 <div class="card shadow-sm mb-4">
@@ -124,10 +127,9 @@
 </div>
 <div class="col-12 mt-2 d-flex justify-content-end">
     <a href="{{ route('rekap.print', [$bulan, $tahun]) }}"
-        target="_blank"
-        class="btn text-white fw-bold px-4"
-        style="background-color: #28a745; border: none;">
-        🖨️ Print
+       target="_blank"
+       class="btn btn-success fw-bold px-4">
+        <i class="bi bi-printer-fill me-2"></i> Print
     </a>
 </div>
 

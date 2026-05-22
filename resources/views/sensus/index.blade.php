@@ -2,7 +2,10 @@
 
 @section('content')
 <div class="container-fluid">
-    <h4 class="mb-3">Sensus Harian Rawat Inap</h4>
+    <h4 style="font-weight: bold; color: #333; margin-bottom: 5px;">
+        <i class="bi bi-clipboard2-pulse menu-icon" style="color:black;"></i>
+        Sensus Harian Rawat Inap
+    </h4>
 
     {{-- FILTER TANGGAL --}}
     <div class="card shadow-sm mb-4">
@@ -172,9 +175,10 @@
     </div>
 
     <div class="col-12 mt-3 d-flex justify-content-end">
-        <a href="{{ route('sensus.print', $tanggal) }}" target="_blank" 
-           class="btn text-white fw-bold px-4" style="background-color: #28a745;">
-            🖨️ Print
+        <a href="{{ route('sensus.print', $tanggal) }}" 
+        target="_blank" 
+        class="btn btn-success fw-bold px-4">
+            <i class="bi bi-printer-fill me-2"></i> Print
         </a>
     </div>
 

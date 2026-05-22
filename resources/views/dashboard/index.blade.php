@@ -217,6 +217,7 @@
     background: white;
     border-radius: 12px;
     min-height: 180px;
+    padding: 5px 0; 
 
     border-left: 12px solid;
 

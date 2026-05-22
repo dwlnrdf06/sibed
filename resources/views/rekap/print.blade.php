@@ -43,17 +43,16 @@
             background-color: #fff3cd;
             font-weight: bold;
         }
-
+        
         @media print {
-
             .no-print {
-                display: none;
+                display: none !important;
             }
-
             body {
                 margin: 0;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
-
         }
 
     </style>
@@ -63,16 +62,14 @@
 <body>
 
 {{-- TOMBOL PRINT --}}
-<div class="no-print mb-3 p-3">
-
-    <button onclick="window.print()" class="btn btn-success">
-        🖨️ Print
-    </button>
-
-    <a href="{{ route('rekap') }}" class="btn btn-danger">
-        ← Kembali
+<div class="no-print mb-3 p-3 d-flex gap-2 align-items-center bg-light rounded shadow-sm">
+    <a href="{{ route('rekap') }}" class="btn btn-outline-danger">
+        <i class="bi bi-arrow-left me-1"></i> Kembali
     </a>
-
+    
+    <button onclick="window.print()" class="btn btn-success fw-bold">
+        <i class="bi bi-printer-fill me-2"></i> Print
+    </button>
 </div>
 
 {{-- HEADER --}}
