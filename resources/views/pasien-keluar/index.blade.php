@@ -23,7 +23,7 @@
             {{-- Nama Pasien --}}
             <div class="col-md-6 mb-3">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-person-fill me-1"></i>Nama Pasien
+                    <i class="bi bi-person-fill me-1"></i>Nama Pasien <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
@@ -38,7 +38,7 @@
             {{-- No RM --}}
             <div class="col-md-3 mb-3">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-upc-scan me-1"></i>No RM
+                    <i class="bi bi-upc-scan me-1"></i>No RM <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
@@ -53,7 +53,7 @@
             {{-- Nama Kamar --}}
             <div class="col-md-3 mb-3">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-house-door-fill me-1"></i>Nama Kamar
+                    <i class="bi bi-house-door-fill me-1"></i>Nama Kamar <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
@@ -77,7 +77,7 @@
             {{-- Keterangan Keluar --}}
             <div class="col-md-4 mb-3">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-clipboard2-pulse-fill me-1"></i>Keterangan Keluar
+                    <i class="bi bi-clipboard2-pulse-fill me-1"></i>Keterangan Keluar <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
@@ -156,7 +156,7 @@
             {{-- Tanggal Masuk --}}
             <div class="col-md-3 mb-3">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-calendar-event-fill me-1"></i>Tgl Masuk
+                    <i class="bi bi-calendar-event-fill me-1"></i>Tgl Masuk <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
@@ -170,7 +170,7 @@
             {{-- Tanggal Keluar --}}
             <div class="col-md-3 mb-3">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-calendar2-check-fill me-1"></i>Tgl Keluar
+                    <i class="bi bi-calendar2-check-fill me-1"></i>Tgl Keluar <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">

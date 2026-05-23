@@ -28,7 +28,7 @@
             {{-- NAMA PASIEN --}}
             <div class="col-md-6 mb-3" style="position: relative;">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-person-fill me-1"></i> Nama Pasien
+                    <i class="bi bi-person-fill me-1"></i> Nama Pasien <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
@@ -46,7 +46,7 @@
             {{-- NO RM --}}
             <div class="col-md-6 mb-3" style="position: relative;">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-upc-scan me-1"></i> No RM
+                    <i class="bi bi-upc-scan me-1"></i> No RM <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
@@ -64,7 +64,7 @@
             {{-- CARA MASUK --}}
             <div class="col-md-4 mb-3">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-door-open-fill me-1"></i> Cara Masuk
+                    <i class="bi bi-door-open-fill me-1"></i> Cara Masuk <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
@@ -82,7 +82,7 @@
             {{-- NAMA KAMAR --}}
 <div class="col-md-4 mb-3">
     <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-        <i class="bi bi-house-door-fill me-1"></i> Nama Kamar
+        <i class="bi bi-house-door-fill me-1"></i> Nama Kamar <span class="text-danger">*</span>
     </label>
 
     <div class="input-group">
@@ -175,7 +175,7 @@
             {{-- TANGGAL MASUK --}}
             <div class="col-md-6 mb-3">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-calendar-event-fill me-1"></i> Tanggal Masuk
+                    <i class="bi bi-calendar-event-fill me-1"></i> Tanggal Masuk <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
