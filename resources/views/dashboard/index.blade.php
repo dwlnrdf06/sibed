@@ -3,59 +3,95 @@
 @section('content')
 
 {{-- GREETING --}}
-<div class="mb-4">
+<div class="p-3 mb-4 text-white position-relative overflow-hidden" 
+     style="background: linear-gradient(135deg, #1e70cd 0%, #2575fc 100%); border-radius: 15px; height: 140px;">
+    
     @php
+        date_default_timezone_set('Asia/Jakarta');
+        $hour = (int) date('H');
+        
+        if ($hour >= 5 && $hour < 12) {
+            $timeGreeting = 'Good Morning';
+        } elseif ($hour >= 12 && $hour < 18) {
+            $timeGreeting = 'Good Afternoon';
+        } else {
+            $timeGreeting = 'Good Night';
+        }
+
         $role = auth()->user()->role;
-        $greeting = match($role) {
-            'admin'   => 'Hello, Admin! 👋',
-            'perawat' => 'Hello, Perawat! 👋',
-            'pmik'    => 'Hello, PMIK! 👋',
-            default   => 'Hello! 👋'
+        $roleName = match($role) {
+            'admin'   => 'Admin',
+            'perawat' => 'Perawat',
+            'pmik'    => 'PMIK',
+            default   => ''
         };
+
+        $finalGreeting = trim("$timeGreeting $roleName");
     @endphp
 
-    <h5 style="font-weight: 700; font-size: 20px; color: #333;">
-        {{ $greeting }}
-    </h5>
-    <p style="font-size: 13px; color: #666; margin-top: 4px;">
-        Selamat datang, di Sistem Manajemen Tempat Tidur Rawat Inap
-    </p>
+    <div class="col-md-9 col-12 d-flex flex-column justify-content-center h-100 ps-4">
+        <h4 class="fw-bold mb-1" style="font-size: 22px; letter-spacing: -0.5px;">
+            {{ $finalGreeting }}
+        </h4>
+        <p class="mb-0 text-white" style="font-size: 13px; max-width: 600px; line-height: 1.4; opacity: 1;">
+            Selamat datang di Sistem Informasi Tempat Tidur (SiBed). Tetap semangat dalam mengelola kapasitas layanan hari ini!
+        </p>
+    </div>
+
+    <div class="position-absolute end-0 bottom-0 top-0 d-none d-md-flex align-items-center justify-content-end pe-4" style="width: 25%; height: 100%;">
+        <img src="{{ asset('images/ilustrasi.png') }}" 
+            alt="Ilustrasi SiBed" 
+            style="height: 120px; width: auto; object-fit: contain; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.15));">
+    </div>
 </div>
 
-<h4 class="mb-4">Ketersediaan Tempat Tidur</h4>
+<h4 class="mb-4 fw-bold">Ketersediaan Tempat Tidur</h4>
 
 {{-- CARD SUMMARY --}}
+{{-- CARD SUMMARY PROPORSIONAL - IKON POJOK KIRI, TEKS TENGAH BESAR --}}
 <div class="row g-4 mb-4">
 
-    <!-- Total Kapasitas -->
     <div class="col-md-4">
-        <div class="modern-card border-blue">
-            <div class="card-body text-center">
-                <h5 class="card-title">TOTAL KAPASITAS</h5>
-                <h1 class="fw-bold text-blue">{{ $totalKapasitas }}</h1>
-                <p class="text-muted mb-0">Tempat Tidur</p>
+        <div class="modern-card border-blue p-4 position-relative">
+            <div class="rounded-3 bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center position-absolute" 
+                 style="width: 44px; height: 44px; top: 15px; left: 15px;">
+                <i class="bi bi-hospital fs-5"></i>
+            </div>
+            
+            <div class="card-body p-0 d-flex flex-column align-items-center text-center mt-4">
+                <h5 class="card-title mb-2 text-muted" style="font-size: 14px; font-weight: 700; letter-spacing: 0.8px; color: #666;">TOTAL KAPASITAS</h5>
+                <h1 class="fw-bold text-blue mb-1" style="font-size: 46px; line-height: 1;">{{ $totalKapasitas }}</h1>
+                <p class="text-muted mb-0" style="font-size: 14px; font-weight: 600;">Tempat Tidur</p>
             </div>
         </div>
     </div>
 
-    <!-- Terisi -->
     <div class="col-md-4">
-        <div class="modern-card border-red">
-            <div class="card-body text-center">
-                <h5 class="card-title">TERISI</h5>
-                <h1 class="fw-bold text-red">{{ $terisi }}</h1>
-                <p class="text-muted mb-0">Tempat Tidur</p>
+        <div class="modern-card border-red p-4 position-relative">
+            <div class="rounded-3 bg-danger bg-opacity-10 text-danger d-flex align-items-center justify-content-center position-absolute" 
+                 style="width: 44px; height: 44px; top: 15px; left: 15px;">
+                <i class="bi bi-person-workspace fs-5"></i>
+            </div>
+            
+            <div class="card-body p-0 d-flex flex-column align-items-center text-center mt-4">
+                <h5 class="card-title mb-2 text-muted" style="font-size: 14px; font-weight: 700; letter-spacing: 0.8px; color: #666;">TERISI</h5>
+                <h1 class="fw-bold text-red mb-1" style="font-size: 46px; line-height: 1;">{{ $terisi }}</h1>
+                <p class="text-muted mb-0" style="font-size: 14px; font-weight: 600;">Tempat Tidur</p>
             </div>
         </div>
     </div>
 
-    <!-- Tersedia -->
     <div class="col-md-4">
-        <div class="modern-card border-green">
-            <div class="card-body text-center">
-                <h5 class="card-title">TERSEDIA</h5>
-                <h1 class="fw-bold text-green">{{ $tersedia }}</h1>
-                <p class="text-muted mb-0">Tempat Tidur</p>
+        <div class="modern-card border-green p-4 position-relative">
+            <div class="rounded-3 bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center position-absolute" 
+                 style="width: 44px; height: 44px; top: 15px; left: 15px;">
+                <i class="bi bi-check-circle-fill fs-5"></i>
+            </div>
+            
+            <div class="card-body p-0 d-flex flex-column align-items-center text-center mt-4">
+                <h5 class="card-title mb-2 text-muted" style="font-size: 14px; font-weight: 700; letter-spacing: 0.8px; color: #666;">TERSEDIA</h5>
+                <h1 class="fw-bold text-green mb-1" style="font-size: 46px; line-height: 1;">{{ $tersedia }}</h1>
+                <p class="text-muted mb-0" style="font-size: 14px; font-weight: 600;">Tempat Tidur</p>
             </div>
         </div>
     </div>
@@ -66,8 +102,8 @@
 <div class="card shadow-sm border-0 rounded-4">
 
     <div class="card-header bg-white border-0 pt-4">
-        <h4 class="text-center fw-bold">
-            DATA KETERSEDIAAN KAMAR RAWAT INAP
+        <h4 class="text-start fw-bold ps-4">
+            Data Ketersediaan Kamar Rawat Inap
         </h4>
     </div>
 

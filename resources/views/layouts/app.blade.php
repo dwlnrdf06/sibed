@@ -15,6 +15,8 @@
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
 
         *{
@@ -212,7 +214,7 @@
         <a class="navbar-brand fw-bold text-white d-flex align-items-center gap-1"
            href="{{ route('dashboard') }}">
 
-            <span>Sistem Manajemen Tempat Tidur Rawat Inap</span>
+            <span>Sistem Informasi Tempat Tidur</span>
 
             <img src="{{ asset('images/SiBedName.png') }}"
                  alt="Logo"

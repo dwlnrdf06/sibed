@@ -30,7 +30,7 @@
                         <i class="bi bi-person-fill" style="color:#6B7280;"></i>
                     </span>
                     <input type="text" id="input_nama" class="form-control" autocomplete="off"
-                        placeholder="Isi Nama Pasien" style="border-color:#6B7280;">
+                        placeholder="Isi Nama Pasien Menggunakan Huruf KAPITAL" style="border-color:#6B7280;">
                 </div>
                 <input type="hidden" name="nama_pasien" id="nama_pasien">
             </div>
