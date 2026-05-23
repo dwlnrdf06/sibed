@@ -36,7 +36,11 @@ class PasienKeluarController extends Controller
 
         // Cari entri pasien masuk yang belum keluar
         $pasienMasuk = PasienMasuk::where('pasien_id', $pasien->id)
-            ->whereDoesntHave('pasienKeluar')
+            ->whereNotIn('id', function($q) {
+                $q->select('pasien_masuk_id')
+                ->from('pasien_keluar')
+                ->whereNotNull('pasien_masuk_id');
+            })
             ->latest('tanggal_masuk')
             ->first();
 
@@ -124,18 +128,22 @@ class PasienKeluarController extends Controller
     {
         $keyword = $request->get('keyword');
 
+        // Cari pasien masuk yang BELUM ADA pasien keluarnya
+        // berdasarkan pasien_masuk_id (bukan pasien_id)
         $pasienMasuk = PasienMasuk::with(['pasien', 'kamar'])
             ->whereHas('pasien', function ($q) use ($keyword) {
-
                 $q->where('nama_pasien', 'LIKE', "%$keyword%")
-                  ->orWhere('no_rm', 'LIKE', "%$keyword%");
+                ->orWhere('no_rm', 'LIKE', "%$keyword%");
             })
-            ->whereDoesntHave('pasienKeluar')
+            ->whereNotIn('id', function($q) {
+                $q->select('pasien_masuk_id')
+                ->from('pasien_keluar')
+                ->whereNotNull('pasien_masuk_id');
+            })
             ->latest('tanggal_masuk')
             ->first();
 
         if ($pasienMasuk) {
-
             return response()->json([
                 'found'         => true,
                 'nama_pasien'   => $pasienMasuk->pasien->nama_pasien,
