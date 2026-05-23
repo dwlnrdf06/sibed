@@ -170,7 +170,8 @@
         .welcome-text{
             display:flex;
             align-items:center;
-            gap:8px;
+            justify-content:center;
+            gap:10px;
             z-index:2;
         }
 
@@ -183,14 +184,14 @@
         }
 
         .wave{
-    font-size:28px;
-    color:white;
-    animation:waveHand 2s infinite;
-    transform-origin:70% 70%;
-    margin-top:-2px;
-    display:flex;
-    align-items:center;
-}
+            font-size:28px;
+            color:white;
+            animation:waveHand 2s infinite;
+            transform-origin:70% 70%;
+            margin-top:-2px;
+            display:flex;
+            align-items:center;
+        }
 
         .left p{
             color:white;
@@ -218,6 +219,18 @@
         .login-box{
             width:100%;
             max-width:320px;
+        }
+
+        /* ================= PROFILE ICON ================= */
+
+        .profile-icon{
+            text-align:center;
+            margin-bottom:8px;
+        }
+
+        .profile-icon i{
+            font-size:75px; /* ubah ukuran di sini */
+            color:black;
         }
 
         .login-box h2{
@@ -323,14 +336,6 @@
                 border-radius:0 0 30px 30px;
             }
 
-            .welcome-text{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    z-index:2;
-}
-
             .wave{
                 font-size:25px;
             }
@@ -382,6 +387,11 @@
     <div class="right">
 
         <div class="login-box">
+
+            {{-- PROFILE ICON --}}
+            <div class="profile-icon">
+                <i class="bi bi-person-circle"></i>
+            </div>
 
             <h2>Sign in</h2>
 

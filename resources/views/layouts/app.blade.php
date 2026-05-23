@@ -17,150 +17,184 @@
 
     <style>
 
-        * {
-            font-family: 'Poppins', sans-serif !important;
-            box-sizing: border-box;
+        *{
+            font-family:'Poppins', sans-serif !important;
+            box-sizing:border-box;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: #f7f8f8;
-            overflow-x: hidden;
+        body{
+            margin:0;
+            padding:0;
+            background:#f7f8f8;
+            overflow-x:hidden;
         }
 
         /* ================= NAVBAR ================= */
 
-        .navbar-gradient {
-            background: #1976D2;
-            height: 95px;
-            padding: 12px 20px;
+        .navbar-gradient{
+            background:#1976D2;
+            height:95px;
+            padding:12px 20px;
 
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            position:fixed;
+            top:0;
+            left:0;
+            right:0;
 
-            z-index: 99;
+            z-index:99;
 
-            display: flex;
-            align-items: center;
+            display:flex;
+            align-items:center;
 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            box-shadow:0 2px 10px rgba(0,0,0,0.15);
 
-            overflow: hidden;
+            overflow:hidden;
         }
 
-        .navbar-brand {
-            font-size: 1.5rem;
+        .navbar-brand{
+            font-size:1.5rem;
         }
 
         /* ================= SIDEBAR ================= */
 
-        .sidebar-fixed {
-            position: fixed;
+        .sidebar-fixed{
+            position:fixed;
 
-            top: 95px;
-            left: 0;
+            top:95px;
+            left:0;
 
-            width: 250px;
-            height: calc(100vh - 95px);
+            width:250px;
+            height:calc(100vh - 95px);
 
-            background: #1565C0;
+            background:linear-gradient(to bottom, #ffffff 0%, #d9ebff 40%, #0b529a 100%);
 
-            padding: 15px;
+            padding:15px;
 
-            z-index: 98;
+            z-index:98;
 
-            overflow-y: auto;
+            overflow-y:auto;
 
-            box-shadow: 2px 0 10px rgba(0,0,0,0.08);
+            box-shadow:2px 0 10px rgba(0,0,0,0.08);
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
         }
 
         /* ================= MENU ================= */
 
-        .menu-link {
-            cursor: pointer;
-            text-decoration: none;
+        .menu-link{
+            cursor:pointer;
+            text-decoration:none;
 
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display:flex;
+            align-items:center;
+            gap:10px;
 
-            padding: 10px 14px;
+            padding:12px 16px;
 
-            color: #fff9f9;
+            color:#000000;
 
-            border-radius: 8px;
+            border-radius:14px;
 
-            transition: 0.2s;
+            transition:all 0.25s ease;
+
+            width:100%;
+
+            position:relative;
         }
 
-        .menu-link:hover {
-            background-color: #1976D2;
-            color: white;
+        /* HOVER */
+        .menu-link:hover{
+            background:rgba(255,255,255,0.75);
+            color:#0b529a !important;
+
+            transform:translateX(4px);
+
+            box-shadow:0 4px 12px rgba(0,0,0,0.08);
         }
 
-        .menu-link.active {
-            background-color: #e6e9ef;
-            color: black !important;
+        /* ACTIVE */
+        .menu-link.active{
+            background:rgba(255,255,255,0.95);
+            color:#0b529a !important;
+
+            font-weight:600;
+
+            box-shadow:0 4px 12px rgba(0,0,0,0.10);
         }
 
-        .menu-icon {
-            font-size: 1rem;
-            width: 20px;
-            text-align: center;
+        /* ICON */
+        .menu-icon{
+            font-size:1rem;
+            width:20px;
+            text-align:center;
         }
 
         /* ================= CONTENT ================= */
 
-        .main-content {
-            margin-left: 250px;
-            margin-top: 95px;
+        .main-content{
+            margin-left:250px;
+            margin-top:95px;
 
-            padding: 20px;
+            padding:20px;
 
-            min-height: calc(100vh - 95px);
+            min-height:calc(100vh - 95px);
         }
 
         /* ================= PROFIL ================= */
 
-        .profil-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.2);
-            padding: 6px 15px;
-            border-radius: 25px;
+        .profil-box{
+            display:flex;
+            align-items:center;
+            gap:10px;
+
+            background:rgba(255,255,255,0.2);
+
+            padding:6px 15px;
+
+            border-radius:25px;
         }
 
-        .profil-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 18px;
+        .profil-avatar{
+            width:38px;
+            height:38px;
+
+            border-radius:50%;
+
+            background:white;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            flex-shrink:0;
+
+            font-size:18px;
         }
 
-        .profil-nama {
-            color: white;
-            font-size: 13px;
-            font-weight: 600;
-            line-height: 1.2;
+        .profil-nama{
+            color:white;
+            font-size:13px;
+            font-weight:600;
+            line-height:1.2;
         }
 
-        .profil-role {
-            color: rgba(255,255,255,0.85);
-            font-size: 11px;
-            text-transform: capitalize;
+        .profil-role{
+            color:rgba(255, 255, 255, 0.85);
+            font-size:11px;
+            text-transform:capitalize;
+        }
+
+        /* ================= SCROLLBAR ================= */
+
+        .sidebar-fixed::-webkit-scrollbar{
+            width:6px;
+        }
+
+        .sidebar-fixed::-webkit-scrollbar-thumb{
+            background:#9ec9ff;
+            border-radius:10px;
         }
 
     </style>
@@ -183,17 +217,17 @@
             <img src="{{ asset('images/SiBedName.png') }}"
                  alt="Logo"
                  style="
-                    height: 120px;
-                    width: auto;
-                    object-fit: contain;
-                    margin-top: -5px;
-                    margin-bottom: -10px;
-                    margin-left: -12px;
+                    height:120px;
+                    width:auto;
+                    object-fit:contain;
+                    margin-top:-5px;
+                    margin-bottom:-10px;
+                    margin-left:-12px;
                  ">
 
         </a>
 
-        {{-- KANAN: Jam + Profil --}}
+        {{-- KANAN --}}
         <div class="d-flex align-items-center gap-3">
 
             {{-- JAM --}}
@@ -236,8 +270,10 @@
         <li class="nav-item mb-2">
             <a href="{{ route('dashboard') }}"
                class="menu-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+
                 <i class="bi bi-speedometer2 menu-icon"></i>
                 Dashboard
+
             </a>
         </li>
 
@@ -245,8 +281,10 @@
         <li class="nav-item mb-2">
             <a href="{{ route('sensus') }}"
                class="menu-link {{ request()->routeIs('sensus') ? 'active' : '' }}">
+
                 <i class="bi bi-clipboard2-pulse menu-icon"></i>
                 Sensus Harian
+
             </a>
         </li>
 
@@ -255,8 +293,10 @@
         <li class="nav-item mb-2">
             <a href="{{ route('pasien-masuk.index') }}"
                class="menu-link {{ request()->routeIs('pasien-masuk.*') ? 'active' : '' }}">
+
                 <i class="bi bi-person-add menu-icon"></i>
                 Pasien Masuk
+
             </a>
         </li>
         @endif
@@ -266,8 +306,10 @@
         <li class="nav-item mb-2">
             <a href="{{ route('pasien-keluar.index') }}"
                class="menu-link {{ request()->routeIs('pasien-keluar.*') ? 'active' : '' }}">
+
                 <i class="bi bi-person-dash menu-icon"></i>
                 Pasien Keluar
+
             </a>
         </li>
         @endif
@@ -277,19 +319,23 @@
         <li class="nav-item mb-4">
             <a href="{{ route('rekap') }}"
                class="menu-link {{ request()->routeIs('rekap') ? 'active' : '' }}">
+
                 <i class="bi bi-bar-chart-line menu-icon"></i>
                 Rekapitulasi
+
             </a>
         </li>
         @endif
 
         <!-- LOGOUT -->
-        <li class="nav-item">
+        <li class="nav-item mt-3">
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button type="submit" class="btn btn-danger w-100">
+
+                <button type="submit" class="btn btn-danger w-100 rounded-3">
                     Logout
                 </button>
+
             </form>
         </li>
 
@@ -310,22 +356,32 @@
 @stack('scripts')
 
 <script>
-    function updateDateTime() {
+
+    function updateDateTime(){
+
         const now = new Date();
-        const el  = document.getElementById('datetime');
-        if (el) {
+
+        const el = document.getElementById('datetime');
+
+        if(el){
+
             el.innerHTML = now.toLocaleDateString('id-ID', {
-                weekday: 'long',
-                day:     '2-digit',
-                month:   'long',
-                year:    'numeric',
-                hour:    '2-digit',
-                minute:  '2-digit'
+                weekday:'long',
+                day:'2-digit',
+                month:'long',
+                year:'numeric',
+                hour:'2-digit',
+                minute:'2-digit'
             });
+
         }
+
     }
+
     setInterval(updateDateTime, 1000);
+
     updateDateTime();
+
 </script>
 
 </body>

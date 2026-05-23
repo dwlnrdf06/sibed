@@ -5,45 +5,76 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PasienMasuk;
 use App\Models\PasienKeluar;
+use App\Models\SensusPindahan;
 use Carbon\Carbon;
 
 class SensusController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil tanggal dari filter, default hari ini
+        // Ambil tanggal filter
         $tanggal = $request->tanggal ?? Carbon::today()->toDateString();
 
-        // Data semua pasien masuk hari ini
+        // ================= PASIEN MASUK =================
+
         $pasienMasuk = PasienMasuk::with(['pasien', 'kamar'])
-                        ->whereDate('tanggal_masuk', $tanggal)
-                        ->get();
+            ->whereDate('tanggal_masuk', $tanggal)
+            ->get();
 
-        // Pisahkan berdasarkan kategori untuk tabel sensus
-        $pasienBaru     = $pasienMasuk->where('cara_masuk', 'Pasien Baru');
-        $pasienPindahan = $pasienMasuk->where('cara_masuk', 'Pindahan Ruangan');
-        $pasienRujukan  = $pasienMasuk->where('cara_masuk', 'Rujukan');
+        // Kelompok pasien masuk
+        $pasienBaru = $pasienMasuk
+            ->where('cara_masuk', 'Pasien Baru');
 
-        // Data pasien keluar
-        $pasienKeluar = PasienKeluar::with(['pasien', 'kamar', 'kamarPindahan'])
-                        ->whereDate('tanggal_keluar', $tanggal)
-                        ->get();
+        $pasienPindahan = $pasienMasuk
+            ->where('cara_masuk', 'Pindahan Ruangan');
 
-        // Pasien Awal (sisa dari hari sebelumnya)
-        $tanggalKemarin = Carbon::parse($tanggal)->subDay()->toDateString();
-        $pasienAwal = PasienMasuk::whereDate('tanggal_masuk', '<=', $tanggalKemarin)
-                        ->whereDoesntHave('pasienKeluar', function($q) use ($tanggalKemarin) {
-                            $q->whereDate('tanggal_keluar', '<=', $tanggalKemarin);
-                        })
-                        ->with(['pasien', 'kamar'])
-                        ->get();
+        $pasienRujukan = $pasienMasuk
+            ->where('cara_masuk', 'Rujukan');
+
+        // ================= PASIEN KELUAR =================
+
+        $pasienKeluar = PasienKeluar::with(['pasien', 'kamar'])
+            ->whereDate('tanggal_keluar', $tanggal)
+            ->get();
+
+        // ================= SENSUS PINDAHAN =================
+
+        $pindahanKeluar = SensusPindahan::whereDate(
+            'tanggal',
+            $tanggal
+        )->get();
+
+        // ================= PASIEN AWAL =================
+
+        $tanggalKemarin = Carbon::parse($tanggal)
+            ->subDay()
+            ->toDateString();
+
+        $pasienAwal = PasienMasuk::whereDate(
+                'tanggal_masuk',
+                '<=',
+                $tanggalKemarin
+            )
+            ->whereDoesntHave('pasienKeluar', function ($q) use ($tanggalKemarin) {
+
+                $q->whereDate(
+                    'tanggal_keluar',
+                    '<=',
+                    $tanggalKemarin
+                );
+            })
+            ->with(['pasien', 'kamar'])
+            ->get();
+
+        // ================= TAMPILKAN VIEW =================
 
         return view('sensus.index', compact(
             'pasienMasuk',
             'pasienBaru',
             'pasienPindahan',
-            'pasienRujukan',      // ← Variabel ini sekarang dikirim
+            'pasienRujukan',
             'pasienKeluar',
+            'pindahanKeluar',
             'pasienAwal',
             'tanggal'
         ));
@@ -51,29 +82,58 @@ class SensusController extends Controller
 
     public function print($tanggal)
     {
-        // Data semua pasien masuk pada tanggal tertentu
+        // ================= PASIEN MASUK =================
+
         $pasienMasuk = PasienMasuk::with(['pasien', 'kamar'])
-                        ->whereDate('tanggal_masuk', $tanggal)
-                        ->get();
+            ->whereDate('tanggal_masuk', $tanggal)
+            ->get();
 
-        // Pisahkan berdasarkan kategori
-        $pasienBaru     = $pasienMasuk->where('cara_masuk', 'Pasien Baru');
-        $pasienPindahan = $pasienMasuk->where('cara_masuk', 'Pindahan Ruangan');
-        $pasienRujukan  = $pasienMasuk->where('cara_masuk', 'Rujukan');
+        // Kelompok pasien masuk
+        $pasienBaru = $pasienMasuk
+            ->where('cara_masuk', 'Pasien Baru');
 
-        // Data pasien keluar
-        $pasienKeluar = PasienKeluar::with(['pasien', 'kamar', 'kamarPindahan'])
-                        ->whereDate('tanggal_keluar', $tanggal)
-                        ->get();
+        $pasienPindahan = $pasienMasuk
+            ->where('cara_masuk', 'Pindahan Ruangan');
 
-        // Pasien Awal
-        $tanggalKemarin = Carbon::parse($tanggal)->subDay()->toDateString();
-        $pasienAwal = PasienMasuk::whereDate('tanggal_masuk', '<=', $tanggalKemarin)
-                        ->whereDoesntHave('pasienKeluar', function($q) use ($tanggalKemarin) {
-                            $q->whereDate('tanggal_keluar', '<=', $tanggalKemarin);
-                        })
-                        ->with(['pasien', 'kamar'])
-                        ->get();
+        $pasienRujukan = $pasienMasuk
+            ->where('cara_masuk', 'Rujukan');
+
+        // ================= PASIEN KELUAR =================
+
+        $pasienKeluar = PasienKeluar::with(['pasien', 'kamar'])
+            ->whereDate('tanggal_keluar', $tanggal)
+            ->get();
+
+        // ================= SENSUS PINDAHAN =================
+
+        $pindahanKeluar = SensusPindahan::whereDate(
+            'tanggal',
+            $tanggal
+        )->get();
+
+        // ================= PASIEN AWAL =================
+
+        $tanggalKemarin = Carbon::parse($tanggal)
+            ->subDay()
+            ->toDateString();
+
+        $pasienAwal = PasienMasuk::whereDate(
+                'tanggal_masuk',
+                '<=',
+                $tanggalKemarin
+            )
+            ->whereDoesntHave('pasienKeluar', function ($q) use ($tanggalKemarin) {
+
+                $q->whereDate(
+                    'tanggal_keluar',
+                    '<=',
+                    $tanggalKemarin
+                );
+            })
+            ->with(['pasien', 'kamar'])
+            ->get();
+
+        // ================= PRINT VIEW =================
 
         return view('sensus.print', compact(
             'pasienMasuk',
@@ -81,6 +141,7 @@ class SensusController extends Controller
             'pasienPindahan',
             'pasienRujukan',
             'pasienKeluar',
+            'pindahanKeluar',
             'pasienAwal',
             'tanggal'
         ));
