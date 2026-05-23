@@ -67,7 +67,8 @@ class PasienKeluarController extends Controller
             'kamar_id'        => $request->kamar_id,
             'tanggal_masuk'   => $request->tanggal_masuk,
             'tanggal_keluar'  => $request->tanggal_keluar,
-            'lama_dirawat'    => $hariPerawatan,
+            'lama_dirawat'    => $lama,           
+            'hari_perawatan'  => $hariPerawatan,
             'cara_keluar'     => $request->cara_keluar,
             'dirujuk_ke'      => $request->dirujuk_ke,
             'pindahan_dari'   => $request->pindahan_dari,
@@ -160,105 +161,115 @@ class PasienKeluarController extends Controller
     }
 
     private function updateSensus($tanggal)
-    {
-        $masukHariIni = PasienMasuk::whereDate(
+{
+    $masukHariIni = PasienMasuk::whereDate(
+        'tanggal_masuk',
+        $tanggal
+    )->get();
+
+    $pasienBaru = $masukHariIni
+        ->where('cara_masuk', 'Pasien Baru')
+        ->count();
+
+    $pasienPindahan = $masukHariIni
+        ->where('cara_masuk', 'Pindahan Ruangan')
+        ->count();
+
+    $pasienRujukan = $masukHariIni
+        ->where('cara_masuk', 'Rujukan')
+        ->count();
+
+    $tanggalKemarin = Carbon::parse($tanggal)
+        ->subDay()
+        ->toDateString();
+
+    $pasienAwal = PasienMasuk::whereDate(
             'tanggal_masuk',
-            $tanggal
-        )->get();
+            '<=',
+            $tanggalKemarin
+        )
+        ->whereDoesntHave('pasienKeluar', function ($q) use ($tanggalKemarin) {
 
-        $pasienBaru = $masukHariIni
-            ->where('cara_masuk', 'Pasien Baru')
-            ->count();
-
-        $pasienPindahan = $masukHariIni
-            ->where('cara_masuk', 'Pindahan Ruangan')
-            ->count();
-
-        $pasienRujukan = $masukHariIni
-            ->where('cara_masuk', 'Rujukan')
-            ->count();
-
-        $tanggalKemarin = Carbon::parse($tanggal)
-            ->subDay()
-            ->toDateString();
-
-        $pasienAwal = PasienMasuk::whereDate(
-                'tanggal_masuk',
+            $q->whereDate(
+                'tanggal_keluar',
                 '<=',
                 $tanggalKemarin
-            )
-            ->whereDoesntHave('pasienKeluar', function ($q) use ($tanggalKemarin) {
+            );
+        })
+        ->count();
 
-                $q->whereDate(
-                    'tanggal_keluar',
-                    '<=',
-                    $tanggalKemarin
-                );
-            })
-            ->count();
+    $keluarHariIni = PasienKeluar::whereDate(
+        'tanggal_keluar',
+        $tanggal
+    )->get();
 
-        $keluarHariIni = PasienKeluar::whereDate(
-            'tanggal_keluar',
+    // ==================== TAMBAHKAN INI (1) ====================
+    // Menghitung total hari perawatan dari semua pasien yang keluar hari ini
+    $totalHariPerawatan = $keluarHariIni->sum('hari_perawatan');
+    // ===========================================================
+
+    $sembuh = $keluarHariIni
+        ->where('cara_keluar', 'Sembuh')
+        ->count();
+
+    $pulangPaksa = $keluarHariIni
+        ->where('cara_keluar', 'Pulang Paksa')
+        ->count();
+
+    $dirujuk = $keluarHariIni
+        ->where('cara_keluar', 'Dirujuk')
+        ->count();
+
+    $dipindahkan = $keluarHariIni
+        ->where('cara_keluar', 'Dipindahkan')
+        ->count();
+
+    $meninggalLt48 = $keluarHariIni
+        ->where('cara_keluar', 'Meninggal < 48 Jam')
+        ->count();
+
+    $meninggalGte48 = $keluarHariIni
+        ->where('cara_keluar', 'Meninggal >= 48 Jam')
+        ->count();
+
+    $masihDirawat = PasienMasuk::whereDate(
+            'tanggal_masuk',
+            '<=',
             $tanggal
-        )->get();
+        )
+        ->whereDoesntHave('pasienKeluar')
+        ->count();
 
-        $sembuh = $keluarHariIni
-            ->where('cara_keluar', 'Sembuh')
-            ->count();
+    $data = [
+        'pasien_awal'          => $pasienAwal,
+        'pasien_baru'          => $pasienBaru,
+        'pasien_pindahan'      => $pasienPindahan,
+        'pasien_rujukan'       => $pasienRujukan,
+        'pasien_dipindahkan'   => $dipindahkan,
+        'pasien_pulang_sembuh' => $sembuh,
+        'pasien_pulang_paksa'  => $pulangPaksa,
+        'meninggal_lt48'       => $meninggalLt48,
+        'meninggal_gte48'      => $meninggalGte48,
+        'dirujuk'              => $dirujuk,
+        'pasien_masih_dirawat' => $masihDirawat,
 
-        $pulangPaksa = $keluarHariIni
-            ->where('cara_keluar', 'Pulang Paksa')
-            ->count();
+        // ==================== TAMBAHKAN INI (2) ====================
+        // Memasukkan hasil hitungan tadi ke kolom database sensus harian kamu
+        'hari_perawatan'       => $totalHariPerawatan, 
+        // ===========================================================
+    ];
 
-        $dirujuk = $keluarHariIni
-            ->where('cara_keluar', 'Dirujuk')
-            ->count();
+    SensusHarian::updateOrCreate(
+        ['tanggal' => $tanggal],
+        $data
+    );
 
-        $dipindahkan = $keluarHariIni
-            ->where('cara_keluar', 'Dipindahkan')
-            ->count();
-
-        $meninggalLt48 = $keluarHariIni
-            ->where('cara_keluar', 'Meninggal < 48 Jam')
-            ->count();
-
-        $meninggalGte48 = $keluarHariIni
-            ->where('cara_keluar', 'Meninggal >= 48 Jam')
-            ->count();
-
-        $masihDirawat = PasienMasuk::whereDate(
-                'tanggal_masuk',
-                '<=',
-                $tanggal
-            )
-            ->whereDoesntHave('pasienKeluar')
-            ->count();
-
-        $data = [
-            'pasien_awal'          => $pasienAwal,
-            'pasien_baru'          => $pasienBaru,
-            'pasien_pindahan'      => $pasienPindahan,
-            'pasien_rujukan'       => $pasienRujukan,
-            'pasien_dipindahkan'   => $dipindahkan,
-            'pasien_pulang_sembuh' => $sembuh,
-            'pasien_pulang_paksa'  => $pulangPaksa,
-            'meninggal_lt48'       => $meninggalLt48,
-            'meninggal_gte48'      => $meninggalGte48,
-            'dirujuk'              => $dirujuk,
-            'pasien_masih_dirawat' => $masihDirawat,
-        ];
-
-        SensusHarian::updateOrCreate(
-            ['tanggal' => $tanggal],
-            $data
-        );
-
-        Rekapitulasi::updateOrCreate(
-            ['tanggal' => $tanggal],
-            array_merge($data, [
-                'bulan' => Carbon::parse($tanggal)->month,
-                'tahun' => Carbon::parse($tanggal)->year,
-            ])
-        );
-    }
+    Rekapitulasi::updateOrCreate(
+        ['tanggal' => $tanggal],
+        array_merge($data, [
+            'bulan' => Carbon::parse($tanggal)->month,
+            'tahun' => Carbon::parse($tanggal)->year,
+        ])
+    );
+}
 }
