@@ -88,8 +88,10 @@
                         <option>Pulang Paksa</option>
                         <option>Dirujuk</option>
                         <option>Dipindahkan</option>
+                        <option>Kabur</option>
                         <option>Meninggal < 48 Jam</option>
                         <option>Meninggal >= 48 Jam</option>
+
                     </select>
                 </div>
             </div>
