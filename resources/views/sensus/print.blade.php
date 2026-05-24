@@ -199,9 +199,9 @@
 
             <th colspan="9">KELUAR RUMAH SAKIT</th>
 
-            <th rowspan="3">Lama Dirawat</th>
+            <th rowspan="3">LD</th>
 
-            <th rowspan="3">Hari Perawatan</th>
+            <th rowspan="3">HP</th>
 
         </tr>
 
