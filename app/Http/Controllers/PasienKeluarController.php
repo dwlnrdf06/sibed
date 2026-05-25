@@ -216,6 +216,10 @@ class PasienKeluarController extends Controller
         ->where('cara_keluar', 'Pulang Paksa')
         ->count();
 
+    $kabur = $keluarHariIni
+    ->where('cara_keluar', 'Kabur')
+    ->count();
+
     $dirujuk = $keluarHariIni
         ->where('cara_keluar', 'Dirujuk')
         ->count();
@@ -248,6 +252,7 @@ class PasienKeluarController extends Controller
         'pasien_dipindahkan'   => $dipindahkan,
         'pasien_pulang_sembuh' => $sembuh,
         'pasien_pulang_paksa'  => $pulangPaksa,
+        'pasien_kabur'         => $kabur, 
         'meninggal_lt48'       => $meninggalLt48,
         'meninggal_gte48'      => $meninggalGte48,
         'dirujuk'              => $dirujuk,

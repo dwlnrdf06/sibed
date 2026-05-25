@@ -19,6 +19,7 @@ class Rekapitulasi extends Model
         'pasien_dipindahkan',
         'pasien_pulang_sembuh',
         'pasien_pulang_paksa',
+        'pasien_kabur',
         'meninggal_lt48',
         'meninggal_gte48',
         'dirujuk',

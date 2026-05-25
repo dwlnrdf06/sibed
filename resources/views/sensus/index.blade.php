@@ -215,7 +215,7 @@
                                 DIPINDAHKAN
                             </th>
 
-                            <th colspan="9" style="font-weight: bold;">
+                            <th colspan="10" style="font-weight: bold;">
                                 KELUAR RUMAH SAKIT
                             </th>
 
@@ -239,7 +239,7 @@
                             <th rowspan="2">Nama Kamar</th>
                             <th rowspan="2">Tgl Masuk</th>
 
-                            <th colspan="5">Cara Keluar</th>
+                            <th colspan="6">Cara Keluar</th>
 
                         </tr>
 
@@ -248,6 +248,7 @@
                             <th>Dirujuk</th>
                             <th>Pulang</th>
                             <th>Paksa</th>
+                            <th>Kabur</th> 
                             <th>&lt;48 Jam</th>
                             <th>≥48 Jam</th>
 
@@ -321,6 +322,10 @@
 
                                 <td>
                                     {{ ($keluar && $keluar->cara_keluar == 'Pulang Paksa') ? '✓' : '' }}
+                                </td>
+
+                                <td>
+                                    {{ ($keluar && $keluar->cara_keluar == 'Kabur') ? '✓' : '' }}
                                 </td>
 
                                 <td>

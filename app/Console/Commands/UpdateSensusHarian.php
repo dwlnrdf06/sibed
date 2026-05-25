@@ -59,6 +59,7 @@ class UpdateSensusHarian extends Command
         $keluarHariIni  = PasienKeluar::whereDate('tanggal_keluar', $tanggal)->get();
         $sembuh         = $keluarHariIni->where('cara_keluar', 'Sembuh')->count();
         $pulangPaksa    = $keluarHariIni->where('cara_keluar', 'Pulang Paksa')->count();
+        $kabur = $keluarHariIni->where('cara_keluar', 'Kabur')->count();
         $dirujuk        = $keluarHariIni->where('cara_keluar', 'Dirujuk')->count();
         $dipindahkan    = $keluarHariIni->where('cara_keluar', 'Dipindahkan')->count();
         $meninggalLt48  = $keluarHariIni->where('cara_keluar', 'Meninggal < 48 Jam')->count();
@@ -92,6 +93,7 @@ class UpdateSensusHarian extends Command
             'pasien_dipindahkan'   => $dipindahkan,
             'pasien_pulang_sembuh' => $sembuh,
             'pasien_pulang_paksa'  => $pulangPaksa,
+            'pasien_kabur'         => $kabur,
             'meninggal_lt48'       => $meninggalLt48,
             'meninggal_gte48'      => $meninggalGte48,
             'dirujuk'              => $dirujuk,
