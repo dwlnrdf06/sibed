@@ -53,6 +53,9 @@ class RekapController extends Controller
             $meninggalGte48 = $keluarHariIni->where('cara_keluar', 'Meninggal >= 48 Jam')->count();
             $jumlah_keluar  = $sembuh + $pulangPaksa + $dirujuk + $meninggalLt48 + $meninggalGte48;
 
+            $jumlahLamaDirawat   = $keluarHariIni->sum('lama_dirawat');
+            $jumlahHariPerawatan = $keluarHariIni->sum('hari_perawatan');
+
             $bor   = $tempat_tidur > 0 ? round(($masihDirawat / $tempat_tidur) * 47, 2) : 0;
             $avlos = $jumlah_keluar > 0 ? round($masihDirawat / $jumlah_keluar, 2) : 0;
             $bto   = round($jumlah_keluar / $tempat_tidur, 2);
@@ -74,6 +77,9 @@ class RekapController extends Controller
                 'dirujuk'            => $dirujuk,
                 'jumlah_keluar'      => $jumlah_keluar,
                 'masih_dirawat'      => $masihDirawat,
+                'jumlah_lama_dirawat'   => $jumlahLamaDirawat,
+                'jumlah_hari_perawatan' => $jumlahHariPerawatan,
+                'bor'                   => $bor,
                 'bor'                => $bor,
                 'avlos'              => $avlos,
                 'bto'                => $bto,
@@ -133,6 +139,9 @@ class RekapController extends Controller
             $meninggalGte48 = $keluarHariIni->where('cara_keluar', 'Meninggal >= 48 Jam')->count();
             $jumlah_keluar  = $sembuh + $pulangPaksa + $dirujuk + $meninggalLt48 + $meninggalGte48;
 
+            $jumlahLamaDirawat   = $keluarHariIni->sum('lama_dirawat');
+            $jumlahHariPerawatan = $keluarHariIni->sum('hari_perawatan');
+
             $bor   = $tempat_tidur > 0 ? round(($masihDirawat / $tempat_tidur) * 47, 2) : 0;
             $avlos = $jumlah_keluar > 0 ? round($masihDirawat / $jumlah_keluar, 2) : 0;
             $bto   = round($jumlah_keluar / $tempat_tidur, 2);
@@ -154,6 +163,9 @@ class RekapController extends Controller
                 'dirujuk'            => $dirujuk,
                 'jumlah_keluar'      => $jumlah_keluar,
                 'masih_dirawat'      => $masihDirawat,
+                'jumlah_lama_dirawat'   => $jumlahLamaDirawat,
+                'jumlah_hari_perawatan' => $jumlahHariPerawatan,
+                'bor'                   => $bor,
                 'bor'                => $bor,
                 'avlos'              => $avlos,
                 'bto'                => $bto,
