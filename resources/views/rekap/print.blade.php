@@ -108,6 +108,8 @@
             <th rowspan="2">Dirujuk</th>
             <th rowspan="2">Jml Keluar</th>
             <th rowspan="2">Masih Dirawat</th>
+            <th rowspan="2">Jml LD</th>  
+            <th rowspan="2">Jml HP</th> 
             <th rowspan="2">BOR</th>
             <th rowspan="2">AVLOS</th>
             <th rowspan="2">BTO</th>
@@ -138,12 +140,14 @@
             <td>{{ $r['pasien_dipindahkan'] ?: 0 }}</td>
             <td>{{ $r['pulang_sembuh'] ?: 0 }}</td>
             <td>{{ $r['pulang_paksa'] ?: 0 }}</td>
-            <td>{{ $r['melarikan_diri'] ?? 0 }}</td>
+            <td>{{ $r['pasien_kabur'] ?? 0 }}</td>
             <td>{{ $r['meninggal_lt48'] ?: 0 }}</td>
             <td>{{ $r['meninggal_gte48'] ?: 0 }}</td>
             <td>{{ $r['dirujuk'] ?: 0 }}</td>
             <td>{{ $r['jumlah_keluar'] ?: 0 }}</td>
             <td>{{ $r['masih_dirawat'] ?: 0 }}</td>
+            <td>{{ $r['jumlah_lama_dirawat'] ?? 0 }}</td> 
+            <td>{{ $r['jumlah_hari_perawatan'] ?? 0 }}</td>
             <td>{{ $r['bor'] ? $r['bor'].'%' : 0 }}</td>
             <td>{{ $r['avlos'] ?: 0 }}</td>
             <td>{{ $r['bto'] ?: 0 }}</td>
@@ -173,7 +177,7 @@
 
             <td>{{ collect($rekap)->sum('pulang_paksa') }}</td>
 
-            <td>{{ collect($rekap)->sum('melarikan_diri') }}</td>
+            <td>{{ collect($rekap)->sum('pasien_kabur') }}</td>
 
             <td>{{ collect($rekap)->sum('meninggal_lt48') }}</td>
 
@@ -184,6 +188,10 @@
             <td>{{ collect($rekap)->sum('jumlah_keluar') }}</td>
 
             <td>{{ collect($rekap)->last()['masih_dirawat'] }}</td>
+
+            <td>{{ collect($rekap)->sum('jumlah_lama_dirawat') }}</td> 
+
+            <td>{{ collect($rekap)->sum('jumlah_hari_perawatan') }}</td> 
 
             <td>{{ round(collect($rekap)->avg('bor'), 2) }}%</td>
 

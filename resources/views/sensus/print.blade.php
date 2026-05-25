@@ -197,7 +197,7 @@
 
             <th colspan="4">DIPINDAHKAN</th>
 
-            <th colspan="9">KELUAR RUMAH SAKIT</th>
+            <th colspan="10">KELUAR RUMAH SAKIT</th>
 
             <th rowspan="3">LD</th>
 
@@ -217,7 +217,7 @@
             <th rowspan="2">Nama Kamar</th>
             <th rowspan="2">Tgl Masuk</th>
 
-            <th colspan="5">Cara Keluar</th>
+            <th colspan="6">Cara Keluar</th>
 
         </tr>
 
@@ -226,6 +226,7 @@
             <th>Dirujuk</th>
             <th>Pulang</th>
             <th>Paksa</th>
+            <th>Kabur</th>
             <th>&lt;48 Jam</th>
             <th>≥48 Jam</th>
 
@@ -262,6 +263,8 @@
             <td>{{ $pk->cara_keluar == 'Sembuh' ? '✓' : '' }}</td>
 
             <td>{{ $pk->cara_keluar == 'Pulang Paksa' ? '✓' : '' }}</td>
+
+            <td>{{ $pk->cara_keluar == 'Kabur' ? '✓' : '' }}</td>
 
             <td>{{ $pk->cara_keluar == 'Meninggal < 48 Jam' ? '✓' : '' }}</td>
 
