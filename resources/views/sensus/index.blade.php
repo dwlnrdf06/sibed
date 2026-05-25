@@ -205,56 +205,71 @@
 
                 <table class="table table-bordered table-sm text-center align-middle mb-0">
 
-                    <thead class="table-light">
+                    <thead class="table-light text-center align-middle">
 
-                        <tr>
+    <tr>
 
-                            <th rowspan="3" style="font-weight: bold;">NO</th>
+        <th rowspan="4" class="align-middle">NO</th>
 
-                            <th colspan="4" style="font-weight: bold;">
-                                DIPINDAHKAN
-                            </th>
+        <th colspan="4" class="align-middle fw-bold">
+            DIPINDAHKAN
+        </th>
 
-                            <th colspan="10" style="font-weight: bold;">
-                                KELUAR RUMAH SAKIT
-                            </th>
+        <th colspan="10" class="align-middle fw-bold">
+            KELUAR RUMAH SAKIT
+        </th>
 
-                            <th rowspan="3" style="font-weight: bold;">LD</th>
+        <th rowspan="4" class="align-middle">LD</th>
 
-                            <th rowspan="3" style="font-weight: bold;">HP</th>
+        <th rowspan="4" class="align-middle">HP</th>
 
-                        </tr>
+    </tr>
 
-                        <tr>
+    <tr>
 
-                            {{-- DIPINDAHKAN --}}
-                            <th rowspan="2">Nama</th>
-                            <th rowspan="2">No RM</th>
-                            <th rowspan="2">Kelas</th>
-                            <th rowspan="2">Ke Kamar</th>
+        {{-- DIPINDAHKAN --}}
+        <th rowspan="3" class="align-middle">Nama</th>
+        <th rowspan="3" class="align-middle">No RM</th>
+        <th rowspan="3" class="align-middle">Kelas</th>
+        <th rowspan="3" class="align-middle">Ke Kamar</th>
 
-                            {{-- KELUAR RS --}}
-                            <th rowspan="2">Nama</th>
-                            <th rowspan="2">No RM</th>
-                            <th rowspan="2">Nama Kamar</th>
-                            <th rowspan="2">Tgl Masuk</th>
+        {{-- KELUAR RS --}}
+        <th rowspan="3" class="align-middle">Nama</th>
+        <th rowspan="3" class="align-middle">No RM</th>
+        <th rowspan="3" class="align-middle">Nama Kamar</th>
+        <th rowspan="3" class="align-middle">Tgl Masuk</th>
 
-                            <th colspan="6">Cara Keluar</th>
+        <th colspan="6" class="align-middle">
+            Cara Keluar
+        </th>
 
-                        </tr>
+    </tr>
 
-                        <tr>
+    <tr>
 
-                            <th>Dirujuk</th>
-                            <th>Pulang</th>
-                            <th>Paksa</th>
-                            <th>Kabur</th> 
-                            <th>&lt;48 Jam</th>
-                            <th>≥48 Jam</th>
+        <th rowspan="2" class="align-middle">Dirujuk</th>
 
-                        </tr>
+        <th rowspan="2" class="align-middle">Pulang</th>
 
-                    </thead>
+        <th rowspan="2" class="align-middle">Paksa</th>
+
+        <th rowspan="2" class="align-middle">Kabur</th>
+
+        <th colspan="2" class="align-middle">
+            Meninggal
+        </th>
+
+    </tr>
+
+    <tr>
+
+        <th class="align-middle">&lt;48 Jam</th>
+
+        <th class="align-middle">≥48 Jam</th>
+
+    </tr>
+
+</thead>
 
                     <tbody>
 
