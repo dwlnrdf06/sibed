@@ -36,7 +36,7 @@
                     </span>
                     <input type="text" id="nama_pasien_input" name="nama_pasien"
                         class="form-control" autocomplete="off"
-                        placeholder="Isi Nama Pasien Menggunakan Huruf KAPITAL" required
+                        placeholder="Isi Nama Pasien" required
                         oninput="cariPasien(this.value, 'nama')"
                         style="border-color:#6B7280;">
                 </div>
