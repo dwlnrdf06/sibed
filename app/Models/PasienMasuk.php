@@ -31,4 +31,14 @@ class PasienMasuk extends Model
     {
         return $this->hasOne(PasienKeluar::class, 'pasien_id', 'pasien_id');
     }
+
+    public function setRujukanDariAttribute($value)
+    {
+        $this->attributes['rujukan_dari'] = $value ? strtoupper($value) : null;
+    }
+
+    public function setPindahanDariAttribute($value)
+    {
+        $this->attributes['pindahan_dari'] = $value ? strtoupper($value) : null;
+    }
 }

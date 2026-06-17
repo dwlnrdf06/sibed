@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PasienKeluar extends Model
 {
-    protected $table = 'pasien_keluar'; // ← wajib ada
+    protected $table = 'pasien_keluar';
 
     protected $fillable = [
         'pasien_id',
@@ -30,8 +30,14 @@ class PasienKeluar extends Model
     {
         return $this->belongsTo(Kamar::class);
     }
+
     public function kamarPindahan()
-{
-    return $this->belongsTo(Kamar::class, 'kamar_pindahan_id');
-}
+    {
+        return $this->belongsTo(Kamar::class, 'kamar_pindahan_id');
+    }
+
+    public function setDirujukKeAttribute($value)
+    {
+        $this->attributes['dirujuk_ke'] = $value ? strtoupper($value) : null;
+    }
 }
