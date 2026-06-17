@@ -83,7 +83,7 @@
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
                         <i class="bi bi-clipboard2-pulse-fill" style="color:#6B7280;"></i>
                     </span>
-                    <select name="cara_keluar" class="form-select" style="border-color:#6B7280;">
+                    <select name="cara_keluar" id="cara_keluar" class="form-select" style="border-color:#6B7280;">
                         <option>Sembuh</option>
                         <option>Pulang Paksa</option>
                         <option>Dirujuk</option>
@@ -91,58 +91,33 @@
                         <option>Kabur</option>
                         <option>Meninggal < 48 Jam</option>
                         <option>Meninggal >= 48 Jam</option>
-
                     </select>
                 </div>
             </div>
 
-            {{-- Dipindahkan --}}
-            <div class="col-md-4 mb-3">
+            {{-- Dipindahkan ke Kamar --}}
+            <div class="col-md-4 mb-3" id="field_kamar_tujuan" style="display:none;">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-arrow-left-right me-1"></i> Dipindahkan
+                    <i class="bi bi-arrow-left-right me-1"></i> Pindah ke Kamar <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
                         <i class="bi bi-box-arrow-in-right" style="color:#6B7280;"></i>
                     </span>
-                    <select name="pindahan_dari" id="pindahan_dari" class="form-select" style="border-color:#6B7280;">
-                        <option value="">-- Pilih Kamar Asal --</option>
-                        <optgroup label="Kelas 1">
-                            <option value="Tulip 1a (Kelas 1)">Tulip 1a </option>
-                            <option value="Tulip 1b (Kelas 1)">Tulip 1b </option>
-                            <option value="Tulip 1c (Kelas 1)">Tulip 1c </option>
-                            <option value="Tulip 1d (Kelas 1)">Tulip 1d </option>
-                            <option value="Tulip 1e (Kelas 1)">Tulip 1e </option>
-                        </optgroup>
-                        <optgroup label="Kelas 2">
-                            <option value="Flamboyan 2a (Kelas 2)">Flamboyan 2a </option>
-                            <option value="Flamboyan 2b (Kelas 2)">Flamboyan 2b </option>
-                            <option value="Flamboyan 2c (Kelas 2)">Flamboyan 2c </option>
-                            <option value="Flamboyan 2d (Kelas 2)">Flamboyan 2d </option>
-                            <option value="Flamboyan 2e (Kelas 2)">Flamboyan 2e </option>
-                        </optgroup>
-                        <optgroup label="Kelas 3">
-                            <option value="Melati 3a (Kelas 3)">Melati 3a </option>
-                            <option value="Melati 3b (Kelas 3)">Melati 3b </option>
-                            <option value="Melati 3c (Kelas 3)">Melati 3c </option>
-                            <option value="Melati 3d (Kelas 3)">Melati 3d </option>
-                        </optgroup>
-                        <optgroup label="VIP">
-                            <option value="Mawar a (VIP)">Mawar a </option>
-                            <option value="Mawar b (VIP)">Mawar b </option>
-                            <option value="Mawar c (VIP)">Mawar c </option>
-                        </optgroup>
-                        <optgroup label="VVIP">
-                            <option value="Anggrek a (VVIP)">Anggrek a </option>
-                            <option value="Anggrek b (VVIP)">Anggrek b </option>
-                            <option value="Anggrek c (VVIP)">Anggrek c </option>
-                        </optgroup>
+                    <select name="kamar_tujuan_id" id="kamar_tujuan_id" class="form-select" style="border-color:#6B7280;">
+                        <option value="">-- Pilih Kamar Tujuan --</option>
+                        @foreach($semuaKamar as $k)
+                            <option value="{{ $k->id }}">{{ $k->nama_kamar }} (tersisa {{ $k->kapasitas - $k->terisi }} tempat)</option>
+                        @endforeach
                     </select>
                 </div>
+                @error('kamar_tujuan_id')
+                    <div class="text-danger" style="font-size:0.85em;">{{ $message }}</div>
+                @enderror
             </div>
 
             {{-- Dirujuk Ke --}}
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3" id="field_dirujuk_ke" style="display:none;">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
                     <i class="bi bi-hospital-fill me-1"></i>Dirujuk Ke
                 </label>
@@ -196,6 +171,29 @@
 <script>
 let debounce;
 
+// Show/hide field berdasarkan cara keluar
+document.getElementById('cara_keluar').addEventListener('change', function() {
+    const fieldKamarTujuan  = document.getElementById('field_kamar_tujuan');
+    const selectKamarTujuan = document.getElementById('kamar_tujuan_id');
+    const fieldDirujukKe    = document.getElementById('field_dirujuk_ke');
+    const inputDirujukKe    = document.querySelector('input[name="dirujuk_ke"]');
+
+    // Reset semua dulu
+    fieldKamarTujuan.style.display  = 'none';
+    selectKamarTujuan.required      = false;
+    selectKamarTujuan.value         = '';
+    fieldDirujukKe.style.display    = 'none';
+    inputDirujukKe.value            = '';
+
+    // Tampilkan sesuai pilihan
+    if (this.value === 'Dipindahkan') {
+        fieldKamarTujuan.style.display = 'block';
+        selectKamarTujuan.required     = true;
+    } else if (this.value === 'Dirujuk') {
+        fieldDirujukKe.style.display = 'block';
+    }
+});
+
 function cariPasien(keyword) {
     clearTimeout(debounce);
     const info = document.getElementById('info_pasien');
@@ -218,10 +216,10 @@ function cariPasien(keyword) {
         .then(res => res.json())
         .then(data => {
             if (data.found) {
-                document.getElementById('input_nama').value = data.nama_pasien;
-                document.getElementById('input_norm').value = data.no_rm;
-                document.getElementById('nama_pasien').value = data.nama_pasien;
-                document.getElementById('no_rm').value = data.no_rm;
+                document.getElementById('input_nama').value    = data.nama_pasien;
+                document.getElementById('input_norm').value    = data.no_rm;
+                document.getElementById('nama_pasien').value   = data.nama_pasien;
+                document.getElementById('no_rm').value         = data.no_rm;
                 document.getElementById('kamar_id_hidden').value = data.kamar_id;
                 document.getElementById('tanggal_masuk').value = data.tanggal_masuk;
 

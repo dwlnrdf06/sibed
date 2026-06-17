@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 {{-- ===== JUDUL ===== --}}
 <h4 style="font-weight: bold; color: #333; margin-bottom: 5px;">
     <i class="bi bi-person-fill-add me-2" style="color:black;"></i>
@@ -80,57 +79,46 @@
             </div>
 
             {{-- NAMA KAMAR --}}
-<div class="col-md-4 mb-3">
-    <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-        <i class="bi bi-house-door-fill me-1"></i> Nama Kamar <span class="text-danger">*</span>
-    </label>
-
-    <div class="input-group">
-        <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
-            <i class="bi bi-house-door-fill" style="color:#6B7280;"></i>
-        </span>
-
-        <select name="kamar_id" class="form-select" required style="border-color:#6B7280;">
-            <option value="">-- Pilih Kamar --</option>
-
-            @foreach($kamar->groupBy('kelas_kamar') as $kelas => $kamarList)
-
-                <optgroup label="{{ $kelas }}">
-
-                    @foreach($kamarList as $k)
-
-                        <option value="{{ $k->id }}">
-                            {{ $k->nama_kamar }}
-                        </option>
-
-                    @endforeach
-
-                </optgroup>
-
-            @endforeach
-
-        </select>
-    </div>
-</div>
-            {{-- RUJUKAN DARI --}}
             <div class="col-md-4 mb-3">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-building-fill-check me-1"></i> Rujukan Dari
+                    <i class="bi bi-house-door-fill me-1"></i> Nama Kamar <span class="text-danger">*</span>
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
+                        <i class="bi bi-house-door-fill" style="color:#6B7280;"></i>
+                    </span>
+                    <select name="kamar_id" class="form-select" required style="border-color:#6B7280;">
+                        <option value="">-- Pilih Kamar --</option>
+                        @foreach($kamar->groupBy('kelas_kamar') as $kelas => $kamarList)
+                            <optgroup label="{{ $kelas }}">
+                                @foreach($kamarList as $k)
+                                    <option value="{{ $k->id }}">{{ $k->nama_kamar }}</option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            {{-- RUJUKAN DARI (muncul hanya saat Rujukan) --}}
+            <div class="col-md-4 mb-3" id="field_rujukan_dari" style="display:none;">
+                <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
+                    <i class="bi bi-building-fill-check me-1"></i> Rujukan Dari <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
                         <i class="bi bi-building-fill-check" style="color:#6B7280;"></i>
                     </span>
                     <input type="text" name="rujukan_dari" id="rujukan_dari"
-                        class="form-control" placeholder="Isi jika rujukan"
+                        class="form-control" placeholder="Contoh: Puskesmas Sumbersari"
                         style="border-color:#6B7280;">
                 </div>
             </div>
 
-            {{-- PINDAHAN DARI --}}
-            <div class="col-md-4 mb-3">
+            {{-- PINDAHAN DARI (muncul hanya saat Pindahan Ruangan) --}}
+            <div class="col-md-4 mb-3" id="field_pindahan_dari" style="display:none;">
                 <label class="form-label fw-semibold" style="font-size:15px; color:#6B7280;">
-                    <i class="bi bi-arrow-left-right me-1"></i> Pindahan Dari
+                    <i class="bi bi-arrow-left-right me-1"></i> Pindahan Dari <span class="text-danger">*</span>
                 </label>
                 <div class="input-group">
                     <span class="input-group-text" style="background:#f3f4f6; border-color:#6B7280;">
@@ -138,36 +126,13 @@
                     </span>
                     <select name="pindahan_dari" id="pindahan_dari" class="form-select" style="border-color:#6B7280;">
                         <option value="">-- Pilih Kamar Asal --</option>
-                        <optgroup label="Kelas 1">
-                            <option value="Tulip 1a (Kelas 1)">Tulip 1a </option>
-                            <option value="Tulip 1b (Kelas 1)">Tulip 1b </option>
-                            <option value="Tulip 1c (Kelas 1)">Tulip 1c </option>
-                            <option value="Tulip 1d (Kelas 1)">Tulip 1d </option>
-                            <option value="Tulip 1e (Kelas 1)">Tulip 1e </option>
-                        </optgroup>
-                        <optgroup label="Kelas 2">
-                            <option value="Flamboyan 2a (Kelas 2)">Flamboyan 2a </option>
-                            <option value="Flamboyan 2b (Kelas 2)">Flamboyan 2b </option>
-                            <option value="Flamboyan 2c (Kelas 2)">Flamboyan 2c </option>
-                            <option value="Flamboyan 2d (Kelas 2)">Flamboyan 2d </option>
-                            <option value="Flamboyan 2e (Kelas 2)">Flamboyan 2e </option>
-                        </optgroup>
-                        <optgroup label="Kelas 3">
-                            <option value="Melati 3a (Kelas 3)">Melati 3a </option>
-                            <option value="Melati 3b (Kelas 3)">Melati 3b </option>
-                            <option value="Melati 3c (Kelas 3)">Melati 3c </option>
-                            <option value="Melati 3d (Kelas 3)">Melati 3d </option>
-                        </optgroup>
-                        <optgroup label="VIP">
-                            <option value="Mawar a (VIP)">Mawar a </option>
-                            <option value="Mawar b (VIP)">Mawar b </option>
-                            <option value="Mawar c (VIP)">Mawar c </option>
-                        </optgroup>
-                        <optgroup label="VVIP">
-                            <option value="Anggrek a (VVIP)">Anggrek a </option>
-                            <option value="Anggrek b (VVIP)">Anggrek b </option>
-                            <option value="Anggrek c (VVIP)">Anggrek c </option>
-                        </optgroup>
+                        @foreach($kamar->groupBy('kelas_kamar') as $kelas => $kamarList)
+                            <optgroup label="{{ $kelas }}">
+                                @foreach($kamarList as $k)
+                                    <option value="{{ $k->nama_kamar }}">{{ $k->nama_kamar }}</option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -199,6 +164,28 @@
 
 @push('scripts')
 <script>
+
+// Show/hide field berdasarkan cara masuk
+document.getElementById('cara_masuk').addEventListener('change', function() {
+    const fieldRujukan  = document.getElementById('field_rujukan_dari');
+    const fieldPindahan = document.getElementById('field_pindahan_dari');
+    const inputRujukan  = document.getElementById('rujukan_dari');
+    const selectPindahan = document.getElementById('pindahan_dari');
+
+    // Reset semua dulu
+    fieldRujukan.style.display  = 'none';
+    fieldPindahan.style.display = 'none';
+    inputRujukan.value          = '';
+    selectPindahan.value        = '';
+
+    // Tampilkan sesuai pilihan
+    if (this.value === 'Rujukan') {
+        fieldRujukan.style.display = 'block';
+    } else if (this.value === 'Pindahan Ruangan') {
+        fieldPindahan.style.display = 'block';
+    }
+});
+
 function cariPasien(keyword, tipe) {
     let dropdownId = (tipe === 'nama') ? 'dropdown_pasien' : 'dropdown_norm';
     let dropdown = document.getElementById(dropdownId);
@@ -228,13 +215,13 @@ function cariPasien(keyword, tipe) {
 
             data.forEach(pasien => {
                 let item = document.createElement('div');
-                item.style.padding = '12px 18px';
-                item.style.cursor = 'pointer';
-                item.style.borderBottom = '1px solid #F3F4F6';
-                item.style.display = 'flex';
+                item.style.padding       = '12px 18px';
+                item.style.cursor        = 'pointer';
+                item.style.borderBottom  = '1px solid #F3F4F6';
+                item.style.display       = 'flex';
                 item.style.flexDirection = 'column';
-                item.style.gap = '2px';
-                item.style.transition = 'all 0.15s ease';
+                item.style.gap           = '2px';
+                item.style.transition    = 'all 0.15s ease';
 
                 item.innerHTML = `
                     <div style="color:#000; font-weight:700; font-size:14.5px;">${pasien.nama_pasien.toUpperCase()}</div>
@@ -249,9 +236,9 @@ function cariPasien(keyword, tipe) {
 
                 item.onclick = function() {
                     document.getElementById('nama_pasien_input').value = pasien.nama_pasien;
-                    document.getElementById('no_rm_input').value = pasien.no_rm;
+                    document.getElementById('no_rm_input').value       = pasien.no_rm;
                     document.getElementById('dropdown_pasien').style.display = 'none';
-                    document.getElementById('dropdown_norm').style.display = 'none';
+                    document.getElementById('dropdown_norm').style.display   = 'none';
                 };
 
                 dropdown.appendChild(item);
@@ -263,7 +250,7 @@ function cariPasien(keyword, tipe) {
 document.addEventListener('click', function(e) {
     if (e.target.id !== 'nama_pasien_input' && e.target.id !== 'no_rm_input') {
         document.getElementById('dropdown_pasien').style.display = 'none';
-        document.getElementById('dropdown_norm').style.display = 'none';
+        document.getElementById('dropdown_norm').style.display   = 'none';
     }
 });
 

@@ -16,9 +16,10 @@ class PasienKeluarController extends Controller
 {
     public function index()
     {
-        $kamar = Kamar::where('terisi', '>', 0)->get();
+        $kamar       = Kamar::where('terisi', '>', 0)->get();
+        $semuaKamar  = Kamar::whereColumn('terisi', '<', 'kapasitas')->get();
 
-        return view('pasien-keluar.index', compact('kamar'));
+        return view('pasien-keluar.index', compact('kamar', 'semuaKamar'));
     }
 
     public function store(Request $request)
@@ -30,6 +31,7 @@ class PasienKeluarController extends Controller
             'cara_keluar'    => 'required',
             'tanggal_masuk'  => 'required|date',
             'tanggal_keluar' => 'required|date',
+            'kamar_tujuan_id' => 'required_if:cara_keluar,Dipindahkan',
         ]);
 
         $pasien = Pasien::where('no_rm', $request->no_rm)->first();
@@ -74,19 +76,40 @@ class PasienKeluarController extends Controller
             'pindahan_dari'   => $request->pindahan_dari,
         ]);
 
-        // ================= SIMPAN KE SENSUS PINDAHAN =================
+        // ================= SIMPAN KE SENSUS PINDAHAN + AUTO PASIEN MASUK =================
 
         if ($request->cara_keluar == 'Dipindahkan') {
 
-            $kamarAsal = Kamar::find($request->kamar_id);
+            $kamarAsal   = Kamar::find($request->kamar_id);
+            $kamarTujuan = Kamar::find($request->kamar_tujuan_id);
 
+            // Simpan ke sensus pindahan
             SensusPindahan::create([
                 'tanggal'      => $request->tanggal_keluar,
                 'nama_pasien'  => $request->nama_pasien,
                 'no_rm'        => $request->no_rm,
                 'dari_kamar'   => $kamarAsal?->nama_kamar,
-                'ke_kamar'     => $request->pindahan_dari,
+                'ke_kamar'     => $kamarTujuan?->nama_kamar,
             ]);
+
+            // Auto buat entri pasien masuk baru di kamar tujuan
+            PasienMasuk::create([
+                'pasien_id'     => $pasien->id,
+                'kamar_id'      => $request->kamar_tujuan_id,
+                'cara_masuk'    => 'Pindahan Ruangan',
+                'pindahan_dari' => $kamarAsal?->nama_kamar,
+                'tanggal_masuk' => $request->tanggal_keluar,
+            ]);
+
+            // Update kapasitas kamar tujuan
+            if ($kamarTujuan) {
+                $kamarTujuan->increment('terisi');
+                if ($kamarTujuan->terisi >= $kamarTujuan->kapasitas) {
+                    $kamarTujuan->update(['status' => 'terisi']);
+                } else {
+                    $kamarTujuan->update(['status' => 'sebagian']);
+                }
+            }
         }
 
         // ================= UPDATE KAMAR =================
@@ -116,9 +139,8 @@ class PasienKeluarController extends Controller
         }
 
         // ================= UPDATE SENSUS =================
-
+        
         $this->updateSensus($request->tanggal_keluar);
-
         return back()->with(
             'success',
             'Data pasien keluar berhasil disimpan!'
@@ -128,9 +150,6 @@ class PasienKeluarController extends Controller
     public function cariPasienAktif(Request $request)
     {
         $keyword = $request->get('keyword');
-
-        // Cari pasien masuk yang BELUM ADA pasien keluarnya
-        // berdasarkan pasien_masuk_id (bukan pasien_id)
         $pasienMasuk = PasienMasuk::with(['pasien', 'kamar'])
             ->whereHas('pasien', function ($q) use ($keyword) {
                 $q->where('nama_pasien', 'LIKE', "%$keyword%")
@@ -258,10 +277,8 @@ class PasienKeluarController extends Controller
         'dirujuk'              => $dirujuk,
         'pasien_masih_dirawat' => $masihDirawat,
 
-        // ==================== TAMBAHKAN INI (2) ====================
-        // Memasukkan hasil hitungan tadi ke kolom database sensus harian kamu
+        // Memasukkan hasil hitungan ke kolom database sensus harian 
         'hari_perawatan'       => $totalHariPerawatan, 
-        // ===========================================================
     ];
 
     SensusHarian::updateOrCreate(
