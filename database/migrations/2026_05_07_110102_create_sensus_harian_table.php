@@ -22,12 +22,6 @@ return new class extends Migration
             $table->integer('meninggal_gte48')->default(0);
             $table->integer('dirujuk')->default(0);
             $table->integer('pasien_masih_dirawat')->default(0);
-            $table->decimal('bor', 5, 2)->nullable();
-            $table->decimal('avlos', 5, 2)->nullable();
-            $table->decimal('bto', 5, 2)->nullable();
-            $table->decimal('toi', 5, 2)->nullable();
-            $table->decimal('ndr', 5, 2)->nullable();
-            $table->decimal('gdr', 5, 2)->nullable();
             $table->timestamps();
         });
     }
