@@ -266,5 +266,11 @@ document.addEventListener('click', function(e) {
         document.getElementById('dropdown_norm').style.display = 'none';
     }
 });
+
+document.getElementById('no_rm_input').addEventListener('blur', function() {
+    if (this.value.length > 0 && this.value.length !== 6) {
+        alert('No RM maksimal 6 karakter!');
+    }
+});
 </script>
 @endpush
